@@ -1,0 +1,1260 @@
+<h1>Symfony Validator Component</h1>
+
+<h2>Constraints</h2>
+
+<h3>Basic Constraints</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Constraint</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th>Options</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/NotBlank.html">NotBlank</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is not blank, defined as not equal to a blank string and also not equal to <code>null</code>.</td>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/NotBlank.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should not be blank</code>">
+            message</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\NotBlank()
+     */
+    protected $firstName;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Blank.html">Blank</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is blank, defined as equal to a blank string or equal to <code>null</code>.</td>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Blank.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should be blank</code>">
+            message</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\Blank()
+     */
+    protected $firstName;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/NotNull.html">NotNull</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is not strictly equal to <code>null</code>.</td>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/NotNull.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should not be null</code>">
+            message</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\NotNull()
+     */
+    protected $firstName;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Null.html">Null</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is exactly equal to <code>null</code>.</td>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Null.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should be null</code>">
+            message</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+namespace Acme\BlogBundle\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\Null()
+     */
+    protected $firstName;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/True.html">True</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is <code>true</code>. </td>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/True.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should be true</code>">
+            message</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    protected $token;
+
+    /**
+     * @Assert\True(message = "The token is invalid")
+     */
+    public function isTokenValid()
+    {
+        return $this->token == $this->generateToken();
+    }
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/False.html">False</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is <code>false</code>.</td>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/False.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should be false</code>">
+            message</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\False()
+     */
+     public function isStateInvalid($message = "You've entered an invalid state.")
+     {
+        // ...
+     }
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Type.html">Type</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is of a specific data type. Supported types: array, bool, callable, float, double,
+            int, integer, long, null, numeric, object, real, resource, scalar, string.
+        </td>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Type.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should be of type {{ type }}</code>">
+            message</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+namespace Acme\BlogBundle\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\Type(type="integer", message="The value {{ value }} is not a valid {{ type }}.")
+     */
+     protected $age;
+}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>String Constraints</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Constraint</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th>Options</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Email.html">Email</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is a valid email address.</td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Email.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is not a valid email address</code>">
+                message</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Email.html#checkmx"
+               data-content="<strong>type</strong>: <code>Boolean</code> <strong>default</strong>: <code>false</code>. If <code>true</code>, then the <code>checkdnsrr</code> PHP function will be used to check the validity of the MX record of the host of the given email.">
+                checkMX</a>,
+            2.1:
+            <a href="http://symfony.com/doc/master/reference/constraints/Email.html#checkhost"
+               data-content="<strong>type</strong>: <code>Boolean</code> <strong>default</strong>: <code>false</code>. If <code>true</code>, then the <code>checkdnsrr</code> PHP function will be used to check the validity of the MX or the A or the AAAA record of the host of the given email.">
+                checkHost</a>
+        </td>
+        <td>
+<script type="yaml">
+# src/BlogBundle/Resources/config/validation.yml
+Acme\BlogBundle\Entity\Author:
+    properties:
+        email:
+            - Email:
+                message: The email "{{ value }}" is not a valid email.
+                checkMX: true
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/MinLength.html">MinLength</a></td>
+        <td>2.0</td>
+        <td>Validates that the length of a string is at least as long as the given limit.</td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/MinLength.html#limit"
+               data-content="<strong>type</strong>: <code>integer</code>. This required option is the 'min' value. Validation will fail if the length of the given string is <strong>less</strong> than this number.">
+                <strong>limit</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/MinLength.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is too short. It should have {{ limit }} characters or more</code>">
+                message</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/MinLength.html#charset"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>UTF-8</code>. If the PHP extension 'mbstring' is installed, then the PHP function <code>mb_strlen</code> will be used to calculate the length of the string. The value of the charset option is passed as the second argument to that function.">
+                charset</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Blog.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Blog
+{
+    /**
+     * @Assert\MinLength(
+     *     limit=3,
+     *     message="Your name must have at least {{ limit }} characters."
+     * )
+     */
+    protected $summary;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/MaxLength.html">MaxLength</a></td>
+        <td>2.0</td>
+        <td>Validates that the length of a string is not larger than the given limit.</td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/MaxLength.html#limit"
+               data-content="<strong>type</strong>: <code>integer</code>. This required option is the 'max' value. Validation will fail if the length of the given string is <strong>greater</strong> than this number.">
+                <strong>limit</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/MaxLength.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is too long. It should have {{ limit }} characters or less</code>">
+                message</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/MaxLength.html#charset"
+               data-content="<strong>type</strong>: <code>charset</code> <strong>default</strong>: <code>UTF-8</code>. If the PHP extension 'mbstring' is installed, then the PHP function <code>mb_strlen</code> will be used to calculate the length of the string. The value of the charset option is passed as the second argument to that function.">
+                charset</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Blog.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Blog
+{
+    /**
+     * @Assert\MaxLength(100)
+     */
+    protected $summary;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Size.html">Size</a></td>
+        <td>2.1</td>
+        <td>Validates that a given string length or collection elements count is between some minimum and maximum
+            value.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#min"
+               data-content="<strong>type</strong>: <code>integer</code>. This required option is the 'min' length value. Validation will fail if the given value's length is <strong>less</strong> than this min value.">
+                <strong>min</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#max"
+               data-content="<strong>type</strong>: <code>integer</code>. This required option is the 'max' length value. Validation will fail if the given value's length is <strong>greater</strong> than this max value.">
+                <strong>max</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#type"
+               data-content="<strong>type</strong>: <code>integer</code>. The type of value to validate. It can be either <code>string</code> or <code>collection</code>. If not specified, the validator will try the correct type based on the underlying data being validated.">
+                type</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#charset"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>UTF-8</code>. The type of value to validate. It can be either <code>string</code> or <code>collection</code>. If not specified, the validator will try the correct type based on the underlying data being validated.">
+                charset</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#minmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is too short. It should have {{ limit }} characters or more.</code>.">
+                minMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#maxmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is too long. It should have {{ limit }} characters or less.</code> when validating a string, or <code>This collection should contain {{ limit }} elements or less.</code> when validating a collection.">
+                maxMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#exactmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should have exactly {{ limit }} characters.</code> when validating a string, or <code>This collection should contain exactly {{ limit }} elements.</code> when validating a collection.">
+                exactMessage</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/EventBundle/Entity/Participant.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Participant
+{
+    /**
+     * @Assert\Size(
+     *      min = "2",
+     *      max = "50",
+     *      minMessage = "Your first name must be at least 2 characters length",
+     *      maxMessage = "Your first name cannot be longer than than 50 characters length"
+     * )
+     */
+     protected $firstName;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Url.html">Url</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is a valid URL string.</td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Url.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is not a valid URL</code>">
+                message</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Url.html#protocols"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: <code>array('http', 'https')</code>. The protocols that will be considered to be valid. For example, if you also needed <code>ftp://</code> type URLs to be valid, you'd redefine the protocols array, listing <code>http</code>, <code>https</code>, and also <code>ftp</code>.">
+                protocols</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+namespace Acme\BlogBundle\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\Url()
+     */
+     protected $bioUrl;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Regex.html">Regex</a></td>
+        <td>2.0</td>
+        <td>Validates that a value matches a regular expression.</td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Regex.html#pattern"
+               data-content="<strong>type</strong>: <code>string</code>. This required option is the 'max' value. This required option is the regular expression pattern that the input will be matched against.">
+                <strong>pattern</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Regex.html#match"
+               data-content="<strong>type</strong>: <code>Boolean</code> <strong>default</strong>: <code>true</code>. If <code>true</code> (or not set), this validator will pass if the given string matches the given pattern regular expression. However, when this option is set to <code>false</code>, the opposite will occur: validation will pass only if the given string does not match the pattern regular expression.">
+                match</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Regex.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is not valid</code>">
+                message</a>
+        </td>
+        <td>
+<script type="yaml">
+# src/Acme/BlogBundle/Resources/config/validation.yml
+Acme\BlogBundle\Entity\Author:
+    properties:
+        firstName:
+            - Regex:
+                pattern: "/\d/"
+                match:   false
+                message: Your name cannot contain a number
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Ip.html">Ip</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is a valid IP address.</td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Ip.html#version"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>4</code>. This determines exactly how the ip address is validated and can take one of a variety of different values.">
+                version</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Ip.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This is not a valid IP address</code>">
+                message</a>
+        </td>
+        <td>
+<script type="yaml">
+# src/BlogBundle/Resources/config/validation.yml
+Acme\BlogBundle\Entity\Author:
+    properties:
+        ipAddress:
+            - Ip:
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Number Constraints</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Constraint</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th>Options</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Max.html">Max</a></td>
+        <td>2.0</td>
+        <td>Validates that a given number is <em>less</em> than some maximum number.</td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Max.html#limit"
+               data-content="<strong>type</strong>: <code>integer</code>. This required option is the 'max' value. Validation will fail if the given value is <strong>greater</strong> than this max value.">
+                <strong>limit</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Max.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should be {{ limit }} or less</code>.">
+                message</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Max.html#invalidmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should be a valid number</code>.">
+                invalidMessage</a>
+        </td>
+        <td>
+<script type="yaml">
+# src/Acme/EventBundle/Resources/config/validation.yml
+Acme\EventBundle\Entity\Participant:
+    properties:
+        age:
+            - Max: { limit: 50, message: You must be 50 or under to enter. }
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Min.html">Min</a></td>
+        <td>2.0</td>
+        <td>Validates that a given number is <em>greater</em> than some minimum number.</td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Min.html#limit"
+               data-content="<strong>type</strong>: <code>integer</code>. This required option is the 'min' value. Validation will fail if the given value is <strong>less</strong> than this min value.">
+                <strong>limit</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Min.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should be {{ limit }} or more</code>.">
+                message</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Min.html#invalidmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should be a valid number</code>.">
+                invalidMessage</a>
+        </td>
+        <td>
+<script type="yaml">
+# src/Acme/EventBundle/Resources/config/validation.yml
+Acme\EventBundle\Entity\Participant:
+    properties:
+        age:
+            - Min: { limit: 18, message: You must be 18 or older to enter. }
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Min.html">Range</a></td>
+        <td>2.1</td>
+        <td>Validates that a given number is between some minimum and maximum number.</td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Range.html#min"
+               data-content="<strong>type</strong>: <code>integer</code>. This required option is the 'min' value. Validation will fail if the given value is <strong>less</strong> than this min value.">
+                <strong>min</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Range.html#max"
+               data-content="<strong>type</strong>: <code>integer</code>. This required option is the 'max' value. Validation will fail if the given value is <strong>greater</strong> than this max value.">
+                <strong>max</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Range.html#minmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should be {{ limit }} or more.</code>">
+                minMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Range.html#maxmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should be {{ limit }} or less.</code>">
+                maxMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Range.html#invalidmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should be a valid number.</code>">
+                invalidMessage</a>
+        </td>
+        <td>
+<script type="yaml">
+# src/Acme/EventBundle/Resources/config/validation.yml
+Acme\EventBundle\Entity\Participant:
+    properties:
+        age:
+            - Min: { limit: 18, message: You must be 18 or older to enter. }
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Date Constraints</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Constraint</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th>Options</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Date.html">Date</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is a valid date, meaning either a <code>DateTime</code> object or a string
+            (or an object that can be cast into a string) that follows a valid <code>YYYY-MM-DD</code> format.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Date.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is not a valid date</code>">
+                message</a>
+        </td>
+        <td>
+<script type="yaml">
+# src/Acme/BlogBundle/Resources/config/validation.yml
+Acme\BlogBundle\Entity\Author:
+    properties:
+        birthday:
+            - Date: ~
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/DateTime.html">DateTime</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is a valid "datetime", meaning either a <code>DateTime</code> object or a string
+            (or an object that can be cast into a string) that follows a valid <code>YYYY-MM-DD HH:MM:SS</code> format.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/DateTime.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is not a valid datetime</code>">
+                message</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+namespace Acme\BlogBundle\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\DateTime()
+     */
+     protected $createdAt;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Time.html">Time</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is a valid time, meaning either a <code>DateTime</code> object or a string (or an
+            object that can be cast into a string) that follows a valid <code>HH:MM:SS</code> format.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Time.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is not a valid time</code>">
+                message</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/EventBundle/Entity/Event.php
+namespace Acme\EventBundle\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Event
+{
+    /**
+     * @Assert\Time()
+     */
+     protected $startsAt;
+}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Collection Constraints</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Constraint</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th>Options</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Choice.html">Choice</a></td>
+        <td>2.0</td>
+        <td>This constraint is used to ensure that the given value is one of a given set of <strong>valid</strong>
+            choices. It can also be used to validate that each item in an array of items is one of those valid choices.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Choice.html#choices"
+               data-content="<strong>type</strong>: <code>array</code>. A required option (unless callback is specified) - this is the array of options that should be considered in the valid set. The input value will be matched against this array.">
+                choices</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Choice.html#callback"
+               data-content="<strong>type</strong>: <code>string|array|Closure</code>. This is a callback method that can be used instead of the choices option to return the choices array.">
+                callback</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Choice.html#multiple"
+               data-content="<strong>type</strong>: <code>Boolean</code> <strong>default</strong>: <code>false</code>. If this option is <code>true</code>, the input value is expected to be an array instead of a single, scalar value. The constraint will check that each value of the input array can be found in the array of valid choices. If even one of the input values cannot be found, the validation will fail.">
+                multiple</a>
+        </td>
+        <td>
+<script type="php">
+// pass them in directly via the 'choices' option:
+// src/Acme/BlogBundle/Entity/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\Choice(choices = {"male", "female"}, message = "Choose a valid gender.")
+     */
+    protected $gender;
+}
+
+
+// supply with a callback
+// src/Acme/BlogBundle/Entity/Author.php
+class Author
+{
+    public static function getGenders()
+    {
+        return array('male', 'female');
+    }
+}
+// src/Acme/BlogBundle/Entity/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\Choice(callback = "getGenders")
+     */
+    protected $gender;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Collection.html">Collection</a></td>
+        <td>2.0</td>
+        <td>This constraint is used when the underlying data is a collection (i.e. an array or an object that
+            implements <code>Traversable</code> and <code>ArrayAccess</code>), but you'd like to validate
+            different keys of that collection in different ways.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Collection.html#fields"
+               data-content="<strong>type</strong>: <code>array</code>. This option is required, and is an associative array defining all of the keys in the collection and, for each key, exactly which validator(s) should be executed against that element of the collection.">
+                <strong>fields</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Collection.html#allowextrafields"
+               data-content="<strong>type</strong>: <code>Boolean</code> <strong>default</strong>: <code>false</code>. If this option is set to false and the underlying collection contains one or more elements that are not included in the fields option, a validation error will be returned. If set to <code>true</code>, extra fields are ok.">
+                allowExtraFields</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+namespace Acme\BlogBundle\Entity;
+
+class Author
+{
+    protected $profileData = array(
+        'personal_email',
+        'short_bio',
+    );
+
+    public function setProfileData($key, $value)
+    {
+        $this->profileData[$key] = $value;
+    }
+}
+
+// src/Acme/BlogBundle/Entity/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\Collection(
+     *     fields = {
+     *         "personal_email" = @Assert\Email,
+     *         "short_bio" = {
+     *             @Assert\NotBlank(),
+     *             @Assert\MaxLength(
+     *                 limit = 100,
+     *                 message = "Your bio is too long!"
+     *             )
+     *         }
+     *     },
+     *     allowMissingfields = true
+     * )
+     */
+     protected $profileData = array(
+         'personal_email',
+         'short_bio',
+     );
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/UniqueEntity.html">UniqueEntity</a></td>
+        <td>2.0</td>
+        <td>Validates that a particular field (or fields) in a Doctrine entity is (are) unique. This is commonly used,
+            for example, to prevent a new user to register using an email address that already exists in the system.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/UniqueEntity.html#fields"
+               data-content="<strong>type</strong>: <code>array|string</code>. This required option is the field (or list of fields) on which this entity should be unique.">
+                <strong>fields</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/UniqueEntity.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is already used.</code>">
+                message</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/UniqueEntity.html#em"
+               data-content="<strong>type</strong>: <code>string</code>. The name of the entity manager to use for making the query to determine the uniqueness. If it's left blank, the correct entity manager will determined for this class.">
+                em</a>
+        </td>
+        <td>
+<script type="php">
+// Acme/UserBundle/Entity/User.php
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+
+// DON'T forget this use statement!!!
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * @ORM\Entity
+ * @UniqueEntity("email")
+ */
+class Author
+{
+    /**
+     * @var string $email
+     *
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @Assert\Email()
+     */
+    protected $email;
+
+    // ...
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Language.html">Language</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is a valid language code.</td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/UniqueEntity.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is not a valid language</code>">
+                message</a>
+        </td>
+        <td>
+<script type="yaml">
+# src/UserBundle/Resources/config/validation.yml
+Acme\UserBundle\Entity\User:
+    properties:
+        preferredLanguage:
+            - Language:
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Locale.html">Locale</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is a valid locale. The "value" for each locale is either the two letter ISO639-1
+            language code (e.g. fr), or the language code followed by an underscore (_), then the ISO3166 country code
+            (e.g. fr_FR for French/France).
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/UniqueEntity.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is not a valid locale</code>">
+                message</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/UserBundle/Entity/User.php
+namespace Acme\UserBundle\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+class User
+{
+    /**
+     * @Assert\Locale
+     */
+     protected $locale;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Country.html">Country</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is a valid two-letter country code.</td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Country.html#message"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is not a valid country</code>">
+                message</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/UserBundle/Entity/User.php
+namespace Acme\UserBundle\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+class User
+{
+    /**
+     * @Assert\Country
+     */
+     protected $country;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Size.html">Size</a></td>
+        <td>2.1</td>
+        <td>Validates that a given string length or collection elements count is between some minimum and maximum
+            value.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#min"
+               data-content="<strong>type</strong>: <code>integer</code>. This required option is the 'min' length value. Validation will fail if the given value's length is <strong>less</strong> than this min value.">
+                <strong>min</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#max"
+               data-content="<strong>type</strong>: <code>integer</code>. This required option is the 'max' length value. Validation will fail if the given value's length is <strong>greater</strong> than this max value.">
+                <strong>max</strong></a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#type"
+               data-content="<strong>type</strong>: <code>integer</code>. The type of value to validate. It can be either <code>string</code> or <code>collection</code>. If not specified, the validator will try the correct type based on the underlying data being validated.">
+                type</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#charset"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>UTF-8</code>. The type of value to validate. It can be either <code>string</code> or <code>collection</code>. If not specified, the validator will try the correct type based on the underlying data being validated.">
+                charset</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#minmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is too short. It should have {{ limit }} characters or more.</code>.">
+                minMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#maxmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is too long. It should have {{ limit }} characters or less.</code> when validating a string, or <code>This collection should contain {{ limit }} elements or less.</code> when validating a collection.">
+                maxMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Size.html#exactmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value should have exactly {{ limit }} characters.</code> when validating a string, or <code>This collection should contain exactly {{ limit }} elements.</code> when validating a collection.">
+                exactMessage</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/EventBundle/Entity/Participant.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Participant
+{
+    /**
+     * @Assert\Size(
+     *      min = "1",
+     *      max = "5",
+     *      minMessage = "You must specify at least one email",
+     *      maxMessage = "You cannot specify more than 5 emails"
+     * )
+     */
+     protected $emails = array();
+}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>File Constraints</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Constraint</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th>Options</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/File.html">File</a></td>
+        <td>2.0</td>
+        <td>Validates that a value is a valid "file", which can be one of the following: A string (or object with a
+            <code>__toString()</code> method) path to an existing file; A valid <code>File</code> object
+            (including objects of class UploadedFile).
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/File.html#maxsize"
+               data-content="<strong>type</strong>: <code>mixed</code>. If set, the size of the underlying file must be below this file size in order to be valid. The size of the file can be given in one of the following formats: bytes, kilobytes, megabytes.">
+                maxSize</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/File.html#mimetypes"
+               data-content="<strong>type</strong>: <code>array|string</code>. If set, the validator will check that the mime type of the underlying file is equal to the given mime type (if a string) or exists in the collection of given mime types (if an array).">
+                mimeTypes</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/File.html#maxsizemessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>The file is too large ({{ size }}). Allowed maximum size is {{ limit }}</code>">
+                maxSizeMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/File.html#mimetypesmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}</code>">
+                mimeTypesMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/File.html#notfoundmessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>The file could not be found</code>">
+                notFoundMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/File.html#notreadablemessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>The file is not readable</code>">
+                notReadableMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/File.html#uploadinisizeerrormessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>The file is too large. Allowed maximum size is {{ limit }}</code>">
+                uploadIniSizeErrorMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/File.html#uploadformsizeerrormessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>The file is too large</code>">
+                uploadFormSizeErrorMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/File.html#uploaderrormessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>The file could not be uploaded</code>">
+                uploadErrorMessage</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+namespace Acme\BlogBundle\Entity;
+
+use Symfony\Component\HttpFoundation\File\File;
+
+class Author
+{
+    protected $bioFile;
+
+    public function setBioFile(File $file = null)
+    {
+        $this->bioFile = $file;
+    }
+
+    public function getBioFile()
+    {
+        return $this->bioFile;
+    }
+}
+
+// src/Acme/BlogBundle/Entity/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\File(
+     *     maxSize = "1024k",
+     *     mimeTypes = {"application/pdf", "application/x-pdf"},
+     *     mimeTypesMessage = "Please upload a valid PDF"
+     * )
+     */
+    protected $bioFile;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Image.html">Image</a></td>
+        <td>2.0</td>
+        <td>The Image constraint works exactly like the <code>File</code> constraint, except that its mimeTypes and
+            mimeTypesMessage options are automatically setup to work for image files specifically.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Image.html#mimetypes"
+               data-content="<strong>type</strong>: <code>array|string</code>. <strong>default</strong>: <code>image/*</code>.">
+                mimeTypes</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/File.html#maxsizemessage"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This file is not a valid image</code>">
+                mimeTypesMessage</a>,
+            2.1:
+            <a href="http://symfony.com/doc/master/reference/constraints/Image.html#minwidth"
+               data-content="<strong>type</strong>: <code>integer</code>. If set, the width of the image file must be greater than or equal to this value in pixels.">
+                minWidth</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Image.html#maxwidth"
+               data-content="<strong>type</strong>: <code>integer</code>. If set, the width of the image file must be less than or equal to this value in pixels.">
+                maxWidth</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Image.html#minheight"
+               data-content="<strong>type</strong>: <code>integer</code>. If set, the height of the image file must be greater than or equal to this value in pixels.">
+                minHeight</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Image.html#minheight"
+               data-content="<strong>type</strong>: <code>integer</code>. If set, the height of the image file must be less than or equal to this value in pixels.">
+                maxHeight</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Image.html#sizenotdetectedmessage"
+               data-content="<strong>type</strong>: <code>string</code>. <strong>default</strong>: <code>The size of the image could not be detected</code>">
+                sizeNotDetectedMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Image.html#maxwidthmessage"
+               data-content="<strong>type</strong>: <code>string</code>. <strong>default</strong>: <code>The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px</code>">
+                maxWidthMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Image.html#minwidthmessage"
+               data-content="<strong>type</strong>: <code>string</code>. <strong>default</strong>: <code>The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px</code>">
+                minWidthMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Image.html#minwidthmessage"
+               data-content="<strong>type</strong>: <code>string</code>. <strong>default</strong>: <code>The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px</code>">
+                maxHeightMessage</a>,
+            <a href="http://symfony.com/doc/master/reference/constraints/Image.html#minHeightMessage"
+               data-content="<strong>type</strong>: <code>string</code>. <strong>default</strong>: <code>The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px</code>">
+                minHeightMessage</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+namespace Acme\BlogBundle\Entity;
+
+    use Symfony\Component\HttpFoundation\File\File;
+
+class Author
+{
+    protected $headshot;
+
+    public function setHeadshot(File $file = null)
+    {
+        $this->headshot = $file;
+    }
+
+    public function getHeadshot()
+    {
+        return $this->headshot;
+    }
+}
+
+// src/Acme/BlogBundle/Entity/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\Image(
+     *     minWidth = 200,
+     *     maxWidth = 400,
+     *     minHeight = 200,
+     *     maxHeight = 400,
+     * )
+     */
+    protected $headshot;
+}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Other Constraints</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Constraint</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th>Options</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Callback.html">Callback</a></td>
+        <td>2.0</td>
+        <td>The purpose of the Callback assertion is to let you create completely custom validation rules and to
+            assign any validation errors to specific fields on your object. A callback method itself doesn't
+            fail or return any value. Instead a callback method has the ability to directly add validator "violations".
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Callback.html#methods"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: <code>array()</code>. This is an array of the methods that should be executed during the validation process. Each method can be one of the following formats: string method name, static array callback.">
+                <strong>methods</strong></a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/BlogBundle/Entity/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @Assert\Callback(methods={"isAuthorValid"})
+ */
+class Author
+{
+    // ...
+    private $firstName;
+
+    public function isAuthorValid(ExecutionContext $context)
+    {
+        // somehow you have an array of "fake names"
+        $fakeNames = array();
+
+        // check if the name is actually a fake name
+        if (in_array($this->getFirstName(), $fakeNames)) {
+            $context->addViolationAtSubPath('firstname', 'This name sounds totally fake!', array(), null);
+        }
+    }
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/All.html">All</a></td>
+        <td>2.0</td>
+        <td>When applied to an array (or <code>Traversable</code> object), this constraint allows you to apply a
+            collection of constraints to each element of the array.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/All.html#constraints"
+               data-content="<strong>type</strong>: <code>array</code>. This required option is the array of validation constraints that you want to apply to each element of the underlying array.">
+                <strong>constraints</strong></a>
+        </td>
+        <td>
+<script type="yaml">
+# src/UserBundle/Resources/config/validation.yml
+Acme\UserBundle\Entity\User:
+    properties:
+        favoriteColors:
+            - All:
+                - NotBlank:  ~
+                - MinLength: 5
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/UserPassword.html">UserPassword</a></td>
+        <td>2.1</td>
+        <td>This validates that an input value is equal to the current authenticated user's password.
+            This is useful in a form where a user can change his password, but needs to enter his old password
+            for security.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/UserPassword.html#message"
+               data-content="<strong>type</strong>: <code>string</code>. This value should be the user current password.">
+                message</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/UserBundle/Form/Model/ChangePassword.php
+namespace Acme\UserBundle\Form\Model;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+class ChangePassword
+{
+    /**
+     * @Assert\UserPassword(
+     *     message = "Wrong value for your current password"
+     * )
+     */
+     protected $oldPassword;
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/constraints/Valid.html">Valid</a></td>
+        <td>2.0</td>
+        <td>This constraint is used to enable validation on objects that are embedded as properties on an object
+            being validated. This allows you to validate an object and all sub-objects associated with it.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/constraints/Valid.html#traverse"
+               data-content="<strong>type</strong>: <code>Boolean</code> <strong>default</strong>: <code>true</code>. If this constraint is applied to a property that holds an array of objects, then each object in that array will be validated only if this option is set to true.">
+                traverse</a>
+        </td>
+        <td>
+<script type="php">
+// src/Acme/HelloBundle/Address.php
+class Address
+{
+    protected $street;
+    protected $zipCode;
+}
+
+// src/Acme/HelloBundle/Author.php
+class Author
+{
+    protected $firstName;
+    protected $lastName;
+    protected $address;
+}
+
+# src/Acme/HelloBundle/Resources/config/validation.yml
+Acme\HelloBundle\Address:
+    properties:
+        street:
+            - NotBlank: ~
+        zipCode:
+            - NotBlank: ~
+            - MaxLength: 5
+
+Acme\HelloBundle\Author:
+    properties:
+        firstName:
+            - NotBlank: ~
+            - MinLength: 4
+        lastName:
+            - NotBlank: ~
+
+// src/Acme/HelloBundle/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /* ... */
+
+    /**
+     * @Assert\Valid
+     */
+    protected $address;
+}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,114 @@
+@import "../vendor/bootstrap_src/less/bootstrap.less";
+
+@import "../vendor/bootstrap_src/less/responsive.less";
+
+// VARIABLES
+// Navbar
+@navbarBackgroundHighlight: darken(#EFE5CA, 2%);
+@navbarBackground:  darken(#EFE5CA, 15%);
+@navbarText: @black;
+@navbarBrandColor: @black;
+@navbarLinkColor: @grayDarker;
+@navbarLinkColorHover: @white;
+
+// Subnav
+@subnavHeight: 34px;
+@subnavBackgroundHighlight: darken(#fff, 2%);
+@subnavBackground:  darken(#fff, 15%);
+
+
+
+// NAVBAR
+// Links
+.navbar .nav > li > a {
+    text-shadow: 0 -1px 0 rgba(255,255,255,.25);
+    &:hover {
+        text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+    }
+}
+
+// Active nav items
+.navbar .nav .active > a,
+.navbar .nav .active > a:hover {
+    text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+}
+
+// TABLE
+table {
+    .table;
+    .table-striped;
+    th:hover {
+        cursor: pointer;
+    }
+}
+
+
+// MIXINS
+#dattaya {
+    .span (@columns, @prop: width) {
+        @prop: (@fluidGridColumnWidth * @columns) + (@fluidGridGutterWidth * (@columns - 1));
+    }
+}
+
+// NAVS
+// Subnav
+.subnav {
+    min-height: @subnavHeight;
+    padding-left:  20px;
+    padding-right: 20px;
+    #gradient > .vertical(@subnavBackgroundHighlight, @subnavBackground);
+    .border-radius(4px);
+    .box-shadow(~"0 1px 3px rgba(0,0,0,.25), inset 0 -1px 0 rgba(0,0,0,.1)");
+}
+
+.subnav-fixed {
+    position: fixed;
+    top: 0px;
+    left: (@fluidGridColumnWidth * 3) + (@fluidGridGutterWidth * 2) + 3;
+    right: 20px;
+}
+
+#subnav {
+    height: 34px;
+}
+
+@media (max-width: 767px) {
+    .subnav-fixed {
+        position:fixed;
+        left: 20px;
+        right: 20px;
+    }
+}
+
+// Pills
+// Active state
+.nav-list > .active > a,
+.nav-list > .active > a:hover,
+.nav-pills > .active > a,
+.nav-pills > .active > a:hover {
+   background-color: @grayLight;
+}
+
+// UTILITIES
+.default-cursor,
+.default-cursor:hover {
+    cursor: default;
+}
+
+
+// TYPE
+.deprecated {
+    color: @grayLight;
+}
+
+#navbar a.octocat {
+    padding: 5px 0;
+    height: 31px;
+    width: 40px;
+    display: block;
+    background: url('../images/octocat.png') no-repeat 50% 50%;
+
+    &:hover {
+        background: url('../images/octocat_invert.png') no-repeat 50% 50%;
+    }
+}

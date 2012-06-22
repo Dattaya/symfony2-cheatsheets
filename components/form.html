@@ -1,0 +1,188 @@
+<h1>Symfony Form Component</h1>
+
+<h2>Common options</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Option</th>
+        <th>Since</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/book/forms.html#validation-groups">validation_groups</a></td>
+        <td>2.0</td>
+        <td>string, 2.1: <a href="http://symfony.com/doc/master/book/forms.html#groups-based-on-submitted-data">callback</a></td>
+        <td></td>
+        <td>It is used to specify which validation groups should be used to validate a form object.</td>
+        <td>
+<script type="php">
+// src/Acme/DemoBundle/Form/Type/UserType.php
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+public function setDefaultOptions(OptionsResolverInterface $resolver)
+{
+    $resolver->setDefaults(array(
+        'validation_groups' => array('registration')
+    ));
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>mapped</td>
+        <td>2.1</td>
+        <td>Boolean</td>
+        <td><code>true</code></td>
+        <td>It is used in cases where you need extra fields in the form (for example: a "do you agree with these terms"
+            checkbox) that will not be mapped to the underlying object. To achieve this set it to <code>false</code>.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>property_path</td>
+        <td>2.0</td>
+        <td>string, <span class="deprecated">false</span></td>
+        <td></td>
+        <td>If you want to override the property/method name that a field reads from and writes to, you can set
+            the property_path option. Its default value is the field's name.
+        <td></td>
+    </tr>
+    <tr>
+        <td>data</td>
+        <td>2.0</td>
+        <td>mixed</td>
+        <td>Field value of the underlying object</td>
+        <td>Allows to override the initial value for the form or just an individual field.</td>
+        <td>
+<script type="php">
+$builder->add('token', 'hidden', array(
+    'data' => 'abcdef',
+));
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>disabled</td>
+        <td>2.0</td>
+        <td>Boolean</td>
+        <td>false</td>
+        <td>If you don't want a user to modify the value of a field, you can set the disabled option to true.
+            Any submitted value will be ignored.
+        </td>
+        <td>
+<script type="php">
+use Symfony\Component\Form\TextField
+
+$field = new TextField('status', array(
+    'data' => 'Old data',
+    'disabled' => true,
+));
+$field->submit('New data');
+
+// prints "Old data"
+echo $field->getData();
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>required</td>
+        <td>2.0</td>
+        <td>Boolean</td>
+        <td>true</td>
+        <td>If true, an HTML5 required attribute will be rendered.</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>trim</td>
+        <td>2.0</td>
+        <td>Boolean</td>
+        <td>true</td>
+        <td>If true, the whitespace of the submitted string value will be stripped via the trim() function when the
+            data is bound.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>attr</td>
+        <td>2.0</td>
+        <td>array</td>
+        <td>Empty array</td>
+        <td>If you want to add extra attributes to HTML field representation you can use attr option.</td>
+        <td>
+<script type="php">
+$builder->add('body', 'textarea', array(
+    'attr' => array('class' => 'tinymce'),
+));
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>translation_domain</td>
+        <td>2.0</td>
+        <td>string</td>
+        <td>messages</td>
+        <td>This is the translation domain that will be used for any labels or options that are rendered for
+            this field.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>data_class</td>
+        <td>2.0</td>
+        <td>string</td>
+        <td></td>
+        <td>Allows to set the name of the class that holds the underlying data. Required since 2.1 and if not set,
+            an array is expected.
+        </td>
+        <td>
+<script type="php">
+public function getDefaultOptions(array $options)
+{
+    return array(
+        'data_class' => 'Acme\TaskBundle\Entity\Task',
+    );
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>read_only</td>
+        <td>2.0</td>
+        <td>Boolean</td>
+        <td></td>
+        <td>The "read_only" option now renders as readonly="readonly" ????
+        </td>
+        <td>
+<script type="php">
+public function getDefaultOptions(array $options)
+{
+    return array(
+        'data_class' => 'Acme\TaskBundle\Entity\Task',
+    );
+}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Field Types</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Header</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Content</td>
+    </tr>
+    </tbody>
+</table>
