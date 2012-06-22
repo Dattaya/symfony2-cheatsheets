@@ -215,11 +215,11 @@ class Author
                data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is not a valid email address</code>">
                 message</a>,
             <a href="http://symfony.com/doc/master/reference/constraints/Email.html#checkmx"
-               data-content="<strong>type</strong>: <code>Boolean</code> <strong>default</strong>: <code>false</code>. If <code>true</code>, then the <code>checkdnsrr</code> PHP function will be used to check the validity of the MX record of the host of the given email.">
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>false</code>. If <code>true</code>, then the <code>checkdnsrr</code> PHP function will be used to check the validity of the MX record of the host of the given email.">
                 checkMX</a>,
             2.1:
             <a href="http://symfony.com/doc/master/reference/constraints/Email.html#checkhost"
-               data-content="<strong>type</strong>: <code>Boolean</code> <strong>default</strong>: <code>false</code>. If <code>true</code>, then the <code>checkdnsrr</code> PHP function will be used to check the validity of the MX or the A or the AAAA record of the host of the given email.">
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>false</code>. If <code>true</code>, then the <code>checkdnsrr</code> PHP function will be used to check the validity of the MX or the A or the AAAA record of the host of the given email.">
                 checkHost</a>
         </td>
         <td>
@@ -384,7 +384,7 @@ class Author
                data-content="<strong>type</strong>: <code>string</code>. This required option is the 'max' value. This required option is the regular expression pattern that the input will be matched against.">
                 <strong>pattern</strong></a>,
             <a href="http://symfony.com/doc/master/reference/constraints/Regex.html#match"
-               data-content="<strong>type</strong>: <code>Boolean</code> <strong>default</strong>: <code>true</code>. If <code>true</code> (or not set), this validator will pass if the given string matches the given pattern regular expression. However, when this option is set to <code>false</code>, the opposite will occur: validation will pass only if the given string does not match the pattern regular expression.">
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>true</code>. If <code>true</code> (or not set), this validator will pass if the given string matches the given pattern regular expression. However, when this option is set to <code>false</code>, the opposite will occur: validation will pass only if the given string does not match the pattern regular expression.">
                 match</a>,
             <a href="http://symfony.com/doc/master/reference/constraints/Regex.html#message"
                data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>This value is not valid</code>">
@@ -645,7 +645,7 @@ class Event
                data-content="<strong>type</strong>: <code>string|array|Closure</code>. This is a callback method that can be used instead of the choices option to return the choices array.">
                 callback</a>,
             <a href="http://symfony.com/doc/master/reference/constraints/Choice.html#multiple"
-               data-content="<strong>type</strong>: <code>Boolean</code> <strong>default</strong>: <code>false</code>. If this option is <code>true</code>, the input value is expected to be an array instead of a single, scalar value. The constraint will check that each value of the input array can be found in the array of valid choices. If even one of the input values cannot be found, the validation will fail.">
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>false</code>. If this option is <code>true</code>, the input value is expected to be an array instead of a single, scalar value. The constraint will check that each value of the input array can be found in the array of valid choices. If even one of the input values cannot be found, the validation will fail.">
                 multiple</a>
         </td>
         <td>
@@ -697,7 +697,7 @@ class Author
                data-content="<strong>type</strong>: <code>array</code>. This option is required, and is an associative array defining all of the keys in the collection and, for each key, exactly which validator(s) should be executed against that element of the collection.">
                 <strong>fields</strong></a>,
             <a href="http://symfony.com/doc/master/reference/constraints/Collection.html#allowextrafields"
-               data-content="<strong>type</strong>: <code>Boolean</code> <strong>default</strong>: <code>false</code>. If this option is set to false and the underlying collection contains one or more elements that are not included in the fields option, a validation error will be returned. If set to <code>true</code>, extra fields are ok.">
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>false</code>. If this option is set to false and the underlying collection contains one or more elements that are not included in the fields option, a validation error will be returned. If set to <code>true</code>, extra fields are ok.">
                 allowExtraFields</a>
         </td>
         <td>
@@ -1204,7 +1204,7 @@ class ChangePassword
         </td>
         <td>
             <a href="http://symfony.com/doc/master/reference/constraints/Valid.html#traverse"
-               data-content="<strong>type</strong>: <code>Boolean</code> <strong>default</strong>: <code>true</code>. If this constraint is applied to a property that holds an array of objects, then each object in that array will be validated only if this option is set to true.">
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>true</code>. If this constraint is applied to a property that holds an array of objects, then each object in that array will be validated only if this option is set to true.">
                 traverse</a>
         </td>
         <td>

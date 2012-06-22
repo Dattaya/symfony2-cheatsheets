@@ -37,7 +37,7 @@ public function setDefaultOptions(OptionsResolverInterface $resolver)
     <tr>
         <td>mapped</td>
         <td>2.1</td>
-        <td>Boolean</td>
+        <td>bool</td>
         <td><code>true</code></td>
         <td>It is used in cases where you need extra fields in the form (for example: a "do you agree with these terms"
             checkbox) that will not be mapped to the underlying object. To achieve this set it to <code>false</code>.
@@ -70,7 +70,7 @@ $builder->add('token', 'hidden', array(
     <tr>
         <td>disabled</td>
         <td>2.0</td>
-        <td>Boolean</td>
+        <td>bool</td>
         <td>false</td>
         <td>If you don't want a user to modify the value of a field, you can set the disabled option to true.
             Any submitted value will be ignored.
@@ -93,7 +93,7 @@ echo $field->getData();
     <tr>
         <td>required</td>
         <td>2.0</td>
-        <td>Boolean</td>
+        <td>bool</td>
         <td>true</td>
         <td>If true, an HTML5 required attribute will be rendered.</td>
         <td></td>
@@ -101,7 +101,7 @@ echo $field->getData();
     <tr>
         <td>trim</td>
         <td>2.0</td>
-        <td>Boolean</td>
+        <td>bool</td>
         <td>true</td>
         <td>If true, the whitespace of the submitted string value will be stripped via the trim() function when the
             data is bound.
@@ -154,7 +154,7 @@ public function getDefaultOptions(array $options)
     <tr>
         <td>read_only</td>
         <td>2.0</td>
-        <td>Boolean</td>
+        <td>bool</td>
         <td></td>
         <td>The "read_only" option now renders as readonly="readonly" ????
         </td>
