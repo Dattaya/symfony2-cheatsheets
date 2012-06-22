@@ -66,7 +66,9 @@ amplify.subscribe( "content_loaded", function() {
 
     $lis.children( "a" ).smoothScroll();
 
-    $( "body" ).scrollspy( { target: "#subnav", offset: 100 } );
+    $( "body" )
+        .scrollspy( { target: "#subnav", offset: 100 } )
+        .scrollspy( "refresh" );
 
     amplify.publish( "smooth_scroll_to_content" );
 
