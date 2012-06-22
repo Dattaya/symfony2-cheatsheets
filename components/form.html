@@ -95,7 +95,7 @@ echo $field->getData();
         <td>2.0</td>
         <td>bool</td>
         <td>true</td>
-        <td>If true, an HTML5 required attribute will be rendered.</td>
+        <td>If true, a HTML5 <code>required</code> attribute will be rendered.</td>
         <td></td>
     </tr>
     <tr>
@@ -175,15 +175,57 @@ public function getDefaultOptions(array $options)
 
 <h2>Field Types</h2>
 
+<h3>Text Fields</h3>
+
 <table>
     <thead>
     <tr>
-        <th>Header</th>
+        <th>Field&nbsp;type</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th title="Its own options">Options</th>
+        <th>Example</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td>Content</td>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/text.html">text</a></td>
+        <td>2.0</td>
+        <td>The text field represents the most basic input text field.</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/textarea.html">textarea</a></td>
+        <td>2.0</td>
+        <td>Renders a textarea HTML element.</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/email.html">email</a></td>
+        <td>2.0</td>
+        <td>The email field is a text field that is rendered using the HTML5 <code>&lt;input type="email" /&gt;</code>
+            tag.
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/integer.html">integer</a></td>
+        <td>2.0</td>
+        <td>The input <code>number</code> field looks like a text box, except that - if the user's browser supports
+            HTML5 - it will have some extra frontend functionality.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/integer.html#rounding-mode"
+               data-content="<strong>type</strong>: <code>int</code> <strong>default</strong>: <code>IntegerToLocalizedStringTransformer::</code> <code>ROUND_DOWN</code>. By default, if the user enters a non-integer number, it will be rounded down. There are several other rounding methods: <code>IntegerTo...::ROUND_FLOOR</code>, <code>IntegerTo...::ROUND_UP</code>, <code>IntegerTo...::ROUND_CEILING</code>.">
+                rounding_mode</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/integer.html#grouping"
+               data-content="<strong>type</strong>: <code>int</code> <strong>default</strong>: <code>false</code>. This value is used internally as the NumberFormatter::GROUPING_USED value when using PHP's NumberFormatter class. If you set this to true, numbers will be grouped with a comma or period (depending on your locale): 12345.123 would display as 12,345.123.">
+                grouping</a>
+        </td>
+        <td></td>
     </tr>
     </tbody>
 </table>
