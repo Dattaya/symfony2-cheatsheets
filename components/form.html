@@ -173,14 +173,14 @@ public function getDefaultOptions(array $options)
     </tbody>
 </table>
 
-<h2>Field Types</h2>
+<h2>Types</h2>
 
 <h3>Text Fields</h3>
 
 <table>
     <thead>
     <tr>
-        <th>Field&nbsp;type</th>
+        <th>Type</th>
         <th>Since</th>
         <th>Description</th>
         <th title="Its own options">Options</th>
@@ -219,11 +219,614 @@ public function getDefaultOptions(array $options)
         </td>
         <td>
             <a href="http://symfony.com/doc/current/reference/forms/types/integer.html#rounding-mode"
-               data-content="<strong>type</strong>: <code>int</code> <strong>default</strong>: <code>IntegerToLocalizedStringTransformer::</code> <code>ROUND_DOWN</code>. By default, if the user enters a non-integer number, it will be rounded down. There are several other rounding methods: <code>IntegerTo...::ROUND_FLOOR</code>, <code>IntegerTo...::ROUND_UP</code>, <code>IntegerTo...::ROUND_CEILING</code>.">
+               data-content="<strong>type</strong>: <code>int</code> <strong>default</strong>: <code>IntegerToLocalizedStringTransformer::</code> <code>ROUND_DOWN</code>. By default, if the user enters a non-integer number, it will be rounded down. There are several other rounding methods: <code>::ROUND_FLOOR</code>, <code>::ROUND_UP</code>, <code>::ROUND_CEILING</code>, <code>::ROUND_HALFDOWN</code>, <code>::ROUND_HALFEVEN</code>, <code>::ROUND_HALFUP</code>.">
                 rounding_mode</a>,
             <a href="http://symfony.com/doc/current/reference/forms/types/integer.html#grouping"
-               data-content="<strong>type</strong>: <code>int</code> <strong>default</strong>: <code>false</code>. This value is used internally as the NumberFormatter::GROUPING_USED value when using PHP's NumberFormatter class. If you set this to true, numbers will be grouped with a comma or period (depending on your locale): 12345.123 would display as 12,345.123.">
+               data-content="<strong>type</strong>: <code>int</code> <strong>default</strong>: <code>false</code>. This value is used internally as the NumberFormatter::GROUPING_USED value when using PHP's NumberFormatter class. If you set this to <code>true</code>, numbers will be grouped with a comma or period (depending on your locale): 12345.123 would display as 12,345.123.">
                 grouping</a>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/money.html">money</a></td>
+        <td>2.0</td>
+        <td>This field type allows you to specify a currency, whose symbol is rendered next to the text field.</td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/money.html#currency"
+               data-content="<strong>type</strong>: <code>string|false</code> <strong>default</strong>: <code>EUR</code>. This determines the currency symbol that should be shown by the text box. This can also be set to <code>false</code> to hide the currency symbol.">
+                currency</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/money.html#divisor"
+               data-content="<strong>type</strong>: <code>int</code> <strong>default</strong>: <code>1</code>. If you need to divide your starting value by a number before rendering it to the user, you can use the divisor option.">
+                divisor</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/money.html#precision"
+               data-content="<strong>type</strong>: <code>int</code> <strong>default</strong>: <code>2</code>.">
+                precision</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/money.html#grouping"
+               data-content="<strong>type</strong>: <code>int</code> <strong>default</strong>: <code>false</code>. This value is used internally as the NumberFormatter::GROUPING_USED value when using PHP's NumberFormatter class. If you set this to <code>true</code>, numbers will be grouped with a comma or period (depending on your locale): 12345.123 would display as 12,345.123.">
+                grouping</a>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/number.html">number</a></td>
+        <td>2.0</td>
+        <td>Renders an input text field and specializes in handling number input.</td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/number.html#precision"
+               data-content="<strong>type</strong>: <code>int</code> <strong>default</strong>: <code>Locale-specific (usually around 3)</code>. For example, if precision is set to 2, a submitted value of 20.123 will be rounded to, for example, 20.12 (depending on your <code>rounding_mode</code>).">
+                precision</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/number.html#rounding-mode"
+               data-content="<strong>type</strong>: <code>int</code> <strong>default</strong>: <code>IntegerToLocalizedStringTransformer::</code> <code>ROUND_HALFUP</code>. Use it if a submitted number needs to be rounded (based on the <code>precision</code> option). There are several other rounding methods: <code>::ROUND_FLOOR</code>, <code>::ROUND_UP</code>, <code>::ROUND_DOWN</code>, <code>::ROUND_CEILING</code>, <code>::ROUND_HALFDOWN</code>, <code>::ROUND_HALFEVEN</code>.">
+                rounding_mode</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/number.html#grouping"
+               data-content="<strong>type</strong>: <code>int</code> <strong>default</strong>: <code>false</code>. This value is used internally as the NumberFormatter::GROUPING_USED value when using PHP's NumberFormatter class. If you set this to <code>true</code>, numbers will be grouped with a comma or period (depending on your locale): 12345.123 would display as 12,345.123.">
+                grouping</a>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/password.html">password</a></td>
+        <td>2.0</td>
+        <td>The <code>password</code> field renders an input password text box.</td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/password.html#always-empty"
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>true</code>. If set to <code>true</code>, the field will always render blank, even if the corresponding field has a value.">
+                always_empty</a>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/percent.html">percents</a></td>
+        <td>2.0</td>
+        <td>This field adds a percentage sign "%" after the input box.</td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/percent.html#type"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>fractional</code>. This controls how your data is stored on your object. For example, '55%', might be stored as .55 or 55 on your object. Available types: <code>fractional</code> (e.g. .55), <code>integer</code> (e.g. 55).">
+                type</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/percent.html#precision"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>0</code>. By default, the input numbers are rounded. To allow for more decimal places, use this option.">
+                precision</a>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/search.html">search</a></td>
+        <td>2.0</td>
+        <td>This renders an <code>&lt;input type="search" /&gt;</code> field.</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/url.html">url</a></td>
+        <td>2.0</td>
+        <td>The <code>url</code> field is a text field that prepends the submitted value with a given protocol
+            (e.g. <code>http://</code>) if the submitted value doesn't already have a protocol.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/url.html#default-protocol"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>http</code>.">
+                default_protocol</a>
+        </td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Choice Fields</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th title="Its own options">Options</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/choice.html">choice</a></td>
+        <td>2.0</td>
+        <td>A multi-purpose field used to allow the user to "choose" one or more options. It can be rendered as a
+            <code>select</code> tag, radio buttons, or checkboxes.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/choice.html#choices"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: <code>array()</code>. The choices option is an array, where the array key is the item <strong>value</strong> and the array value is the item's <strong>label</strong>.">
+                choices</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/choice.html#choice-list"
+               data-content="<strong>type</strong>: <code>Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface</code>. This is one way of specifying the options to be used for this field.">
+                choice_list</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/choice.html#multiple"
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>false</code>. If <code>true</code>, the user will be able to select multiple options.">
+                multiple</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/choice.html#expanded"
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>false</code>. If set to <code>true</code>, radio buttons or checkboxes will be rendered (depending on the <code>multiple</code> value). If <code>false</code>, a select element will be rendered.">
+                expanded</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/choice.html#preferred-choices"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: <code>array()</code>. If this option is specified, then a sub-set of all of the options will be moved to the top of the select menu. Preferred choices are only meaningful when rendering as a select element (i.e. <code>expanded</code> is <code>false</code>).">
+                preferred_choices</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/choice.html#empty-value"
+               data-content="<strong>type</strong>: <code>string|bool</code>. This option determines whether or not a special 'empty' option (e.g. 'Choose an option') will appear at the top of a select widget.">
+                empty_value</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/choice.html#empty-data"
+               data-content="<strong>type</strong>: <code>mixed</code> <strong>default</strong>: <code>array()</code> if multiple or expanded, <code>''</code> otherwise. This option determines what value the field will return when the <code>empty_value</code> choice is selected.">
+                empty_data</a>
+        </td>
+        <td>
+<script type="php">
+// example 1
+$builder->add('gender', 'choice', array(
+    'choices'   => array('m' => 'Male', 'f' => 'Female'),
+    'required'  => false,
+));
+
+// example 2
+// The following would move the "Baz" option to the top,
+// with a visual separator between it and the rest of the options:
+$builder->add('foo_choices', 'choice', array(
+    'choices' => array('foo' => 'Foo', 'bar' => 'Bar', 'baz' => 'Baz'),
+    'preferred_choices' => array('baz'),
+));
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/entity.html">entity</a></td>
+        <td>2.0</td>
+        <td>Ships with the Doctrine Bridge. A special <code>choice</code> field that's designed to load options from a Doctrine entity.</td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/entity.html#class"
+               data-content="<strong>type</strong>: <code>string</code>. The class of your entity (e.g. AcmeStoreBundle:Category).">
+                class</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/entity.html#property"
+               data-content="<strong>type</strong>: <code>string</code>. This is the property that should be used for displaying the entities as text in the HTML element. If left blank, the entity object will be cast into a string and so must have a <code>__toString()</code> method.">
+                property</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/entity.html#property"
+               data-content="<strong>type</strong>: <code>Doctrine\ORM\QueryBuilder| Closure</code>. This is the property that should be used for displaying the entities as text in the HTML element. If left blank, the entity object will be cast into a string and so must have a <code>__toString()</code> method.">
+                query_builder</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/entity.html#em"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: the default entity manager. If specified, the specified entity manager will be used to load the choices instead of the default entity manager.">
+                em</a>
+        </td>
+        <td>
+<script type="php">
+use Doctrine\ORM\EntityRepository;
+// ...
+
+$builder->add('users', 'entity', array(
+    'class' => 'AcmeHelloBundle:User',
+    'query_builder' => function(EntityRepository $er) {
+        return $er->createQueryBuilder('u')
+            ->orderBy('u.username', 'ASC');
+    },
+));
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/country.html">country</a></td>
+        <td>2.0</td>
+        <td>The <code>country</code> type is a subset of the <code>ChoiceType</code> that displays countries
+            of the world. The country names are displayed in the language of the user. The "value" for each
+            country is the two-letter country code. The locale of your user is guessed using
+            <code>Locale::getDefault()</code>.
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/language.html">language</a></td>
+        <td>2.0</td>
+        <td>The <code>language</code> type is a subset of the <code>ChoiceType</code> that allows to
+            select from a large list of languages. The language names are displayed in the language of the user.
+            The "value" for each language is the Unicode language identifier (e.g. fr or zh-Hant). The locale of
+            your user is guessed using <code>Locale::getDefault()</code>.
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/locale.html">locale</a></td>
+        <td>2.0</td>
+        <td>The <code>locale</code> type is a subset of the <code>ChoiceType</code> that allows to select
+            from a large list of locales (language+country). The locale names are displayed in the language of the user.
+            The "value": two letter ISO639-1 language code (e.g. fr), + optional underscore (_), and then
+            the ISO3166 country code (e.g. fr_FR).
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/timezone.html">timezone</a></td>
+        <td>2.0</td>
+        <td>The <code>timezone</code> type is a subset of the <code>ChoiceType</code> that allows the user
+            to select from all possible timezones. The "value" for each timezone is the full timezone name,
+            such as <code>America/Chicago</code>.
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Date and Time Fields</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th title="Its own options">Options</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/date.html">date</a></td>
+        <td>2.0</td>
+        <td>A field that allows the user to modify date information via a variety of different HTML elements.</td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/date.html#widget"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>choice</code>. The basic way in which this field should be rendered. Can be one of the following: <code>choice</code>: renders three select inputs, <code>text</code>: renders a three field input of type text, <code>single_text</code>: renders a single input of type text.">
+                widget</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/date.html#widget"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>datetime</code>. The format that the date is stored on your underlying object. Valid values are: <code>string</code>, <code>datetime</code>, <code>array</code>, <code>timestamp</code>.">
+                input</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/date.html#empty-value"
+               data-content="<strong>type</strong>: <code>string|array</code>. The <code>empty_value</code> option can be used to add a 'blank' entry or a string to the top of each select box (select boxes appear if the <code>widget</code> option is set to <code>choice</code>).">
+                empty_value</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/date.html#years"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: five years before to five years after the current year. Only relevant when the <code>widget</code> option is set to <code>choice</code>.">
+                years</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/date.html#months"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: 1 to 12. Only relevant when the <code>widget</code> option is set to <code>choice</code>.">
+                months</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/date.html#days"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: 1 to 31. Only relevant when the <code>widget</code> option is set to <code>choice</code>.">
+                days</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/date.html#format"
+               data-content="<strong>type</strong>: <code>integer|string</code> <strong>default</strong>: <code>IntlDateFormatter::MEDIUM</code>. Option used to transform user input into the proper format. This is critical when the <code>widget</code> option is set to <code>single_text</code>, and will define how the user will input the data. By default, the <code>format</code> is determined based on the current user locale.">
+                format</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/date.html#pattern"
+               data-content="<strong>type</strong>: <code>string</code>. Only relevant when the widget is set to <code>choice</code>. The default pattern is based off the <code>format</code> option, and tries to match the characters M, d, and y in the format pattern. If no match is found, the default is the string <code>{{ year }}-{{ month }}-{{ day }}</code>.">
+                pattern</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/date.html#data-timezone"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: system default timezone. Timezone that the input data is <strong>stored in</strong>. This must be one of the PHP supported timezones.">
+                data_timezone</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/date.html#user-timezone"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: system default timezone. Timezone for how the data should be shown to the user (and therefore also the data that the user submits). This must be one of the PHP supported timezones.">
+                user_timezone</a>
+        </td>
+        <td>
+<script type="php">
+// Suppose that you have a publishedAt field whose underlying date
+// is a DateTime object. The following configures the date type
+// for that field as three different choice fields:
+$builder->add('publishedAt', 'date', array(
+    'input'  => 'datetime',
+    'widget' => 'choice',
+));
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/master/reference/forms/types/datetime.html">datetime</a></td>
+        <td>2.0</td>
+        <td>This field type allows the user to modify data that represents a specific date and time (e.g. 1984-06-05 12:15:30).</td>
+        <td>
+            <a href="http://symfony.com/doc/master/reference/forms/types/datetime.html#date-widget"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>choice</code>. Defines the widget option for the <code>date</code> type.">
+                widget</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/datetime.html#time-widget"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>choice</code>. Defines the widget option for the <code>time</code> type.">
+                time_widget</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/datetime.html#input"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>datetime</code>. The format that the date is stored on your underlying object. Valid values are: <code>string</code>(e.g. 2011-06-05 12:15:00), <code>datetime</code>, <code>array</code>, <code>timestamp</code>.">
+                input</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/datetime.html#date-format"
+               data-content="<strong>type</strong>: <code>string|int</code> <strong>default</strong>: <code>IntlDateFormatter::MEDIUM</code>. See <code>date</code>'s type <code>format</code> option.">
+                date_format</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/datetime.html#hours"
+               data-content="<strong>type</strong>: <code>integer</code> <strong>default</strong>: 0 to 23.">
+                hours</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/datetime.html#hours"
+               data-content="<strong>type</strong>: <code>integer</code> <strong>default</strong>: 0 to 59.">
+                minutes</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/datetime.html#seconds"
+               data-content="<strong>type</strong>: <code>integer</code> <strong>default</strong>: 0 to 59.">
+                seconds</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/date.html#years"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: five years before to five years after the current year.">
+                years</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/date.html#months"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: 1 to 12.">
+                months</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/date.html#days"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: 1 to 31.">
+                days</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/datetime.html#with-seconds"
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>false</code>. Whether or not to include seconds in the input. This will result in an additional input to capture seconds.">
+                with_seconds</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/datetime.html#data-timezone"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: system default timezone. Timezone that the input data is <strong>stored in</strong>. This must be one of the PHP supported timezones.">
+                data_timezone</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/datetime.html#user-timezone"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: system default timezone. Timezone for how the data should be shown to the user (and therefore also the data that the user submits). This must be one of the PHP supported timezones.">
+                user_timezone</a>
+        </td>
+        <td>
+<script type="php">
+// Suppose that you have a publishedAt field whose underlying date
+// is a DateTime object. The following configures the date type
+// for that field as three different choice fields:
+$builder->add('publishedAt', 'date', array(
+    'input'  => 'datetime',
+    'widget' => 'choice',
+));
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/time.html">time</a></td>
+        <td>2.0</td>
+        <td>A field to capture time input.</td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/time.html#widget"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>choice</code>. The basic way in which this field should be rendered. Can be one of the following: <code>choice</code>: renders two or three select inputs, <code>text</code>: renders a two or three text inputs, <code>single_text</code>: renders a single input of type text.">
+                widget</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/time.html#input"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>datetime</code>. The format that the date is stored on your underlying object. Valid values are: <code>string</code>(e.g. 12:17:26), <code>datetime</code>, <code>array</code>, <code>timestamp</code>.">
+                input</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/time.html#with-seconds"
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>false</code>. Whether or not to include seconds in the input. This will result in an additional input to capture seconds.">
+                with_seconds</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/time.html#hours"
+               data-content="<strong>type</strong>: <code>integer</code> <strong>default</strong>: 0 to 23. Only relevant when the <code>widget</code> option is set to <code>choice</code>.">
+                hours</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/time.html#minutes"
+               data-content="<strong>type</strong>: <code>integer</code> <strong>default</strong>: 0 to 59. Only relevant when the <code>widget</code> option is set to <code>choice</code>.">
+                minutes</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/time.html#seconds"
+               data-content="<strong>type</strong>: <code>integer</code> <strong>default</strong>: 0 to 59. Only relevant when the <code>widget</code> option is set to <code>choice</code>.">
+                seconds</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/time.html#data-timezone"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: system default timezone. Timezone that the input data is <strong>stored in</strong>. This must be one of the PHP supported timezones.">
+                data_timezone</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/time.html#user-timezone"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: system default timezone. Timezone for how the data should be shown to the user (and therefore also the data that the user submits). This must be one of the PHP supported timezones.">
+                user_timezone</a>
+        </td>
+        <td>
+<script type="php">
+$builder->add('startTime', 'time', array(
+    'input'  => 'timestamp',
+    'widget' => 'choice',
+));
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/birthday.html">birthday</a></td>
+        <td>2.0</td>
+        <td>This type is essentially the same as the <code>date</code> type, but with a more appropriate default for
+            the <code>years</code> option. The <code>years</code> option defaults to 120 years ago to the current year.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/birthday.html#years"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: 120 years ago to the current year. Only relevant when the <code>widget</code> option is set to <code>choice</code>.">
+                years</a>
+        </td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Other Fields</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th title="Its own options">Options</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/checkbox.html">checkbox</a></td>
+        <td>2.0</td>
+        <td>Creates a single input checkbox.</td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/checkbox.html#value"
+               data-content="<strong>type</strong>: <code>mixed</code> <strong>default</strong>: <code>1</code>. The value that's actually used as the value for the checkbox. This does not affect the value that's set on your object.">
+                value</a>
+        </td>
+        <td>
+<script type="php">
+$builder->add('public', 'checkbox', array(
+    'label'     => 'Show this entry publicly?',
+    'required'  => false,
+));
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/file.html">file</a></td>
+        <td>2.0</td>
+        <td>The <code>file</code> type represents a file input in your form.</td>
+        <td></td>
+        <td>
+<script type="php">
+// form definition
+$builder->add('attachment', 'file');
+
+// When the form is submitted, the attachment field
+// will be an instance of UploadedFile. It can be used
+// to move the attachment file to a permanent location:
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+public function uploadAction()
+{
+    // ...
+
+    if ($form->isValid()) {
+        $someNewFilename = ...
+
+        $form['attachment']->getData()->move($dir, $someNewFilename);
+
+        // ...
+    }
+
+    // ...
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/radio.html">radio</a></td>
+        <td>2.0</td>
+        <td>Creates a single radio button. The radio type isn't usually used directly. More commonly it's used internally by other types such as <code>choice</code>.</td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/radio.html#value"
+               data-content="<strong>type</strong>: <code>mixed</code> <strong>default</strong>: <code>1</code>. The value that's actually used as the value for the radio button. This does not affect the value that's set on your object.">
+                value</a>
+        </td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Groups</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th title="Its own options">Options</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/collection.html">collection</a></td>
+        <td>2.0</td>
+        <td>This type is used to render a "collection" of some form. In the easiest sense, it could be an array
+            of text fields that populate an array emails field. In more complex examples, you can embed entire
+            forms, which is useful when creating forms that expose one-to-many relationships
+            (e.g. a product from where you can manage many related product photos).
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/collection.html#type"
+               data-content="<strong>type</strong>: <code>string|FormTypeInterface</code>. This is the field type for each item in this collection (e.g. text, choice, etc). For example, if you have an array of email addresses, you'd use the email type. If you want to embed a collection of some other form, create a new instance of your form type and pass it as this option.">
+                type</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/collection.html#options"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: <code>array()</code>. This is the array of options that's passed to the form type specified in the <code>type</code> option.">
+                options</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/collection.html#allow-add"
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>false</code>. If set to <code>true</code>, then if unrecognized items are submitted to the collection, they will be added as new items. The ending array will contain the existing items as well as the new item that was in the submitted data.">
+                allow_add</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/collection.html#allow-delete"
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>false</code>. If set to <code>true</code>, then if an existing item is not contained in the submitted data, it will be correctly absent from the final array of items. This means that you can implement a 'delete' button via JavaScript which simply removes a form element from the DOM. When the user submits the form, its absence from the submitted data will mean that it's removed from the final array.">
+                allow_delete</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/collection.html#prototype"
+               data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>true</code>.">
+                prototype</a>
+        </td>
+        <td>
+<script type="php">
+$builder->add('emails', 'collection', array(
+    // each item in the array will be an "email" field
+    'type'   => 'email',
+    // these options are passed to each "email" type
+    'options'  => array(
+        'required'  => false,
+        'attr'      => array('class' => 'email-box')
+    ),
+));
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/repeated.html">repeated</a></td>
+        <td>2.0</td>
+        <td>This is a special field "group", that creates two identical fields whose values must match
+            (or a validation error is thrown). The most common use is when you need the user to repeat his or her
+            password or email to verify accuracy.
+        </td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/repeated.html#type"
+               data-content="<strong>type</strong>: <code>text</code>. The two underlying fields will be of this type.">
+                type</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/repeated.html#options"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: <code>array()</code>. This is the array of options that's passed to the form type specified in the <code>type</code> option.">
+                options</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/repeated.html#first-name"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>first</code>. This is the actual field name to be used for the first field. If you don't specify a label, this field name is used to 'guess' the label for you.">
+                first_name</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/repeated.html#second-name"
+               data-content="<strong>type</strong>: <code>string</code> <strong>default</strong>: <code>second</code>. The same as first_name, but for the second field.">
+                second_name</a>,
+            2.1:
+            <a href="http://symfony.com/doc/master/reference/forms/types/repeated.html#first-options"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: <code>array()</code>. Additional options (will be merged into <code>options</code>) that should be passed only to the <strong>first</strong> field.">
+                first_options</a>,
+            <a href="http://symfony.com/doc/master/reference/forms/types/repeated.html#second-options"
+               data-content="<strong>type</strong>: <code>array</code> <strong>default</strong>: <code>array()</code>. Additional options (will be merged into <code>options</code>) that should be passed only to the <strong>second</strong> field.">
+                second_options</a>
+        </td>
+        <td>
+<script type="php">
+$builder->add('password', 'repeated', array(
+    'type' => 'password',
+    'invalid_message' => 'The password fields must match.',
+    'options' => array('required' => true),
+    'first_options'  => array('label' => 'Password'),
+    'second_options' => array('label' => 'Repeat Password'),
+));
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Hidden Fields</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Since</th>
+        <th>Description</th>
+        <th title="Its own options">Options</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/hidden.html">hidden</a></td>
+        <td>2.0</td>
+        <td>The <code>hidden</code> type represents a hidden input field.</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/types/csrf.html">csrf</a></td>
+        <td>2.0</td>
+        <td>The csrf type is a hidden input field containing a CSRF token.</td>
+        <td>
+            <a href="http://symfony.com/doc/current/reference/forms/types/csrf.html#csrf-provider"
+               data-content="<strong>type</strong>: <code>Symfony\Component\Form\CsrfProvider\CsrfProviderInterface</code>. The <code>CsrfProviderInterface</code> object that should generate the CSRF token.">
+                csrf_provider</a>,
+            <a href="http://symfony.com/doc/current/reference/forms/types/csrf.html#csrf-provider"
+               data-content="<strong>type</strong>: <code>string</code>. An optional unique identifier used to generate the CSRF token.">
+                intention</a>
         </td>
         <td></td>
     </tr>
