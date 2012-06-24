@@ -1,0 +1,150 @@
+<h1>HttpKernel</h1>
+
+<h2>Events</h2>
+Use <code>kernel.event_listener</code> tag name to subscribe to these events.
+
+<table>
+    <thead>
+    <tr>
+        <th>Event</th>
+        <th>Since</th>
+        <th>Event class</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/book/internals.html#kernel-request-event">kernel.request</a></td>
+        <td>2.0</td>
+        <td>
+            <a href="http://api.symfony.com/2.0/Symfony/Component/HttpKernel/Event/GetResponseEvent.html">GetResponseEvent</a>
+        </td>
+        <td>The goal of this event is to either return a <code>Response</code> object immediately or setup variables
+            so that a <code>Controller</code> can be called after the event. Any listener can return a
+            <code>Response</code> object via the <code>setResponse()</code> method on the event.
+            In this case, all other listeners won't be called.</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/book/internals.html#kernel-controller-event">kernel.controller</a></td>
+        <td>2.0</td>
+        <td><a href="http://api.symfony.com/2.0/Symfony/Component/HttpKernel/Event/FilterControllerEvent.html">FilterControllerEvent</a></td>
+        <td>This event can be an entry point used to modify the controller that should be executed.</td>
+        <td>
+<script type="php">
+// services.yml
+services:
+    acme_demo.user_listener:
+        class: Acme\DemoBundle\EventListener\UserListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController, priority: 100  }
+
+// UserListener.php
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+
+public function onKernelController(FilterControllerEvent $event)
+{
+    $controller = $event->getController();
+    // ...
+
+    // the controller can be changed to any PHP callable
+    $event->setController($controller);
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/book/internals.html#kernel-view-event">kernel.view</a></td>
+        <td>2.0</td>
+        <td><a href="http://api.symfony.com/2.0/Symfony/Component/HttpKernel/Event/GetResponseForControllerResultEvent.html">GetResponseForControllerResultEvent</a></td>
+        <td>it can be used to implement a view sub-system. This event is called only if the <code>Controller</code>
+            does not return a <code>Response</code> object. The purpose of the event is to allow some other
+            return value to be converted into a <code>Response</code>.
+        </td>
+        <td>
+<script type="php">
+// services.yml
+services:
+    acme_demo.user_listener:
+        class: Acme\DemoBundle\EventListener\UserListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
+
+// UserListener.php
+use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpFoundation\Response;
+
+public function onKernelView(GetResponseForControllerResultEvent $event)
+{
+    $val = $event->getControllerResult();
+    $response = new Response();
+    // some how customize the Response from the return value
+
+    $event->setResponse($response);
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/book/internals.html#kernel-view-event">kernel.response</a></td>
+        <td>2.0</td>
+        <td><a href="http://api.symfony.com/2.0/Symfony/Component/HttpKernel/Event/FilterResponseEvent.html">FilterResponseEvent</a></td>
+        <td>The purpose of this event is to allow other systems to modify or replace the <code>Response</code> object
+            after its creation.
+        </td>
+        <td>
+<script type="php">
+// services.yml
+services:
+    acme_demo.user_listener:
+        class: Acme\DemoBundle\EventListener\UserListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+// UserListener.php
+public function onKernelResponse(FilterResponseEvent $event)
+{
+    $response = $event->getResponse();
+    // .. modify the response object
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/book/internals.html#kernel-exception-event">kernel.exception</a></td>
+        <td>2.0</td>
+        <td><a href="http://api.symfony.com/2.0/Symfony/Component/HttpKernel/Event/GetResponseForExceptionEvent.html">GetResponseForExceptionEvent</a></td>
+        <td>The exception event occurs when an uncaught exception appears. This event allows you to create a
+            response for a thrown exception or to modify the thrown exception.
+        </td>
+        <td>
+<script type="php">
+use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpFoundation\Response;
+
+public function onKernelException(GetResponseForExceptionEvent $event)
+{
+    $exception = $event->getException();
+    $response = new Response();
+    // setup the Response object based on the caught exception
+    $event->setResponse($response);
+
+    // you can alternatively set a new Exception
+    // $exception = new \Exception('Some special exception');
+    // $event->setException($exception);
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>kernel.terminate</td>
+        <td>2.1</td>
+        <td>PostResponseEvent</td>
+        <td>The terminate event occurs once a response was sent. This event allows you to run expensive post-response
+            jobs.
+        </td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>

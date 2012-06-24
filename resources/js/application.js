@@ -30,13 +30,10 @@ amplify.subscribe( "sidebar_loaded", function() {
 // NAVBAR
 // Toggle navbar active link
 amplify.subscribe( "content_loaded", function() {
-    var title = location.hash.substring( 1, location.hash.lastIndexOf( "/" ) );
-    title = title.charAt( 0 ).toUpperCase() + title.slice( 1 );
-
     $( "#navbar" )
         .children( "li" )
         .removeClass( "active" )
-        .has( "a:contains(" + title + ")" )
+        .has( "a[href^='" + location.hash.split( "/" )[0] + "']" )
         .addClass( "active" );
 }, 1 );
 
@@ -154,9 +151,11 @@ amplify.subscribe( "content_loaded", function() {
 
 // Show popovers for a[data-content]
 amplify.subscribe( "content_loaded", function() {
-    $( "a[data-content]" )
+    $( "[data-content]" )
         .each( function() {
-            $( this ).popover( { placement: "bottom", title: $( this ).text() } );
+            $( this )
+                .addClass("popup")
+                .popover( { placement: "bottom", title: $( this ).text() } );
         } )
 }, 6);
 

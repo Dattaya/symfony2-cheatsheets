@@ -7495,6 +7495,9 @@ table th:hover {
 .default-cursor:hover {
   cursor: default;
 }
+.popup {
+  cursor: pointer;
+}
 .deprecated {
   color: #999999;
 }
