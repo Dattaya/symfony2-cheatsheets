@@ -1,22 +1,384 @@
 <h1>Sensio Framework Extra Bundle</h1>
 
-<ul class="nav nav-pills">
-<li class="active"><a href="#">Route</a></li>
-</ul>
+<h2>@Route</h2>
 
-<h2>Options</h2>
+<p>The @Route annotation maps a route pattern with a controller.</p>
 
-<h2>Built-in Field Types</h2>
 <table>
-<thead>
-<tr>
-    <th>Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-    <td>Content</td>
-</tr>
-</tbody>
+    <thead>
+    <tr>
+        <th>Option</th>
+        <th>Type</th>
+        <th>Class level</th>
+        <th>Action level</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="required">default</td>
+        <td>string</td>
+        <td>✓</td>
+        <td>✓</td>
+        <td>Route pattern. As a class level annotation it defines a prefix for all action routes.</td>
+        <td>
+<script type="php">
+// The index action of the Post controller is now mapped to the "/blog/" URL.
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+/**
+ * @Route("/blog")
+ */
+class PostController extends Controller
+{
+    /**
+     * @Route("/")
+     */
+    public function indexAction()
+    {
+        // ...
+    }
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>requirements</td>
+        <td>array</td>
+        <td>✓</td>
+        <td>✓</td>
+        <td>Regular expression requirements for route parameters.</td>
+        <td>
+<script type="php">
+/**
+ * @Route("/{id}", requirements={"id" = "\d+"}, defaults={"foo" = "bar"})
+ */
+public function showAction($id)
+{
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>defaults</td>
+        <td>array</td>
+        <td>✓</td>
+        <td>✓</td>
+        <td>Default values for route parameters.</td>
+        <td>
+<script type="php">
+/**
+ * @Route("/{id}", requirements={"id" = "\d+"}, defaults={"foo" = "bar"})
+ */
+public function showAction($id)
+{
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>string</td>
+        <td></td>
+        <td>✓</td>
+        <td>A route defined with the <code>@Route</code> annotation is given a default name composed of the
+            bundle name, the controller name and the action name. The <code>name</code> attribute can be used to
+            override this default route name.
+        </td>
+        <td>
+<script type="php">
+/**
+ * @Route("/", name="blog_home")
+ */
+public function indexAction()
+{
+    // ...
+}
+
+// Result of `php app/console route:debug`:
+// Name                   Method Pattern
+// blog_home              ANY    /
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>service</td>
+        <td>string</td>
+        <td>✓</td>
+        <td></td>
+        <td>Can be used to assign the controller class to a service so that the controller resolver will
+            instantiate the controller by fetching it from the DI container instead of calling
+            <code>new PostController()</code> itself.
+        </td>
+        <td>
+<script type="php">
+/**
+ * @Route(service="my_post_controller_service")
+ */
+class PostController extends Controller
+{
+    // ...
+}
+</script>
+        </td>
+    </tr>
+    </tbody>
 </table>
 
+<h2>@Method</h2>
+
+<p>@Method annotation is used to specify the HTTP method allowed for the route. To use it, import the
+    Method annotation namespace. The <code>@Method</code> annotation is only considered when an action is
+    annotated with <code>@Route</code>.</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Option</th>
+        <th>Type</th>
+        <th>Class level</th>
+        <th>Action level</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="required">default</td>
+        <td>array</td>
+        <td></td>
+        <td>✓</td>
+        <td>HTTP methods.</td>
+        <td>
+<script type="php">
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+/**
+ * @Route("/blog")
+ */
+class PostController extends Controller
+{
+    /**
+     * @Route("/edit/{id}")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction($id)
+    {
+    }
+}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>@ParamConverter</h2>
+
+<p>The <code>@ParamConverter</code> annotation calls converters to convert request parameters to objects.
+These objects are stored as request attributes and so they can be injected as controller method arguments.
+The bundle has only one built-in converter, the Doctrine one.</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Option</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="required">default</td>
+        <td>string</td>
+        <td>Controller's parameter name where the object will be injected in.</td>
+        <td>
+<script type="php">
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
+/**
+ * @Route("/blog/{id}")
+ * @ParamConverter("post", class="SensioBlogBundle:Post")
+ */
+public function showAction(Post $post)
+{
+}
+
+// If you use type hinting as in the example above,
+// you can even omit the @ParamConverter annotation altogether:
+
+// automatic with method signature
+public function showAction(Post $post)
+{
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td class="required">class</td>
+        <td>string</td>
+        <td>A class name or another name that available param converters understand
+            (e.g. <code>SensioBlogBundle:Post</code> for DoctrineParamConverter).
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>options</td>
+        <td>array</td>
+        <td>Param converter's options. For example, the <code>DoctrineParamConverter</code> has
+            the <code>entity_manager</code> option.
+        </td>
+        <td>
+<script type="php">
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
+/**
+ * @Route("/blog/{id}")
+ * @ParamConverter("post", class="SensioBlogBundle:Post", options={"entity_manager" = "foo"})
+ */
+public function showAction(Post $post)
+{
+}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>@Template</h2>
+
+<p>The <code>@Template</code> annotation associates a controller with a template name. If the action returns
+    a <code>Response</code> object, the <code>@Template</code> annotation is simply ignored.</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Option</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>default</td>
+        <td>string</td>
+        <td>Template path. Could be omitted if the template is named after the controller and action names.</td>
+        <td>
+<script type="php">
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+/**
+ * @Template("SensioBlogBundle:Post:show.html.twig")
+ */
+public function showAction($id)
+{
+    // get the Post
+    $post = ...;
+
+    return array('post' => $post);
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>vars</td>
+        <td>array</td>
+        <td>If the only parameters to pass to the template are method arguments,
+            you can use the <code>vars</code> attribute instead of returning an array.
+        </td>
+        <td>
+<script type="php">
+/**
+ * @ParamConverter("post", class="SensioBlogBundle:Post")
+ * @Template("SensioBlogBundle:Post:show.html.twig", vars={"post"})
+ */
+public function showAction(Post $post)
+{
+}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>@Cache</h2>
+
+<p>The <code>@Cache</code> annotation makes it easy to define HTTP caching. All options may be used on a class
+    and a method level. When there is a conflict between the class configuration and the method configuration,
+    the latter overrides the former.</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Option</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>expires</td>
+        <td>string</td>
+        <td>Sets the <code>Expires</code> HTTP header</td>
+        <td>
+<script type="php">
+/**
+ * @Cache(expires="tomorrow")
+ */
+class BlogController extends Controller
+{
+    /**
+     * @Cache(expires="+2 days")
+     */
+    public function indexAction()
+    {
+    }
+}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>smaxage</td>
+        <td>int</td>
+        <td>Sets the number of seconds after which the response should no longer be considered fresh by shared
+            caches.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>maxage</td>
+        <td>int</td>
+        <td>Sets the number of seconds after which the response should no longer be considered fresh.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>vary</td>
+        <td>array</td>
+        <td>Sets the <code>Vary</code> header.
+        </td>
+        <td>
+<script type="php">
+/**
+ * @Cache(expires="tomorrow")
+ */
+class BlogController extends Controller
+{
+    /**
+     * @Cache(smaxage="15", vary={"Accept-Language"})
+     */
+    public function indexAction()
+    {
+    }
+}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>

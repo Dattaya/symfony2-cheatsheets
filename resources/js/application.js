@@ -46,7 +46,7 @@ amplify.subscribe( "content_loaded", function() {
 amplify.subscribe( "content_loaded", function() {
     var $lis = $( "#main h2" ).map( function() {
         var $h2 = $( this );
-        var id = $h2.text().replace( new RegExp( "[\\s]+", "g" ), "_" );
+        var id = $h2.text().replace( new RegExp( "[\\s]+", "g" ), "_" ).replace( new RegExp( "[@;,&/]+", "g" ), "" );
 
         $h2.attr( "id", id );
 
