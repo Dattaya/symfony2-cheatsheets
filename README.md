@@ -54,7 +54,8 @@ To create a popup use a `data-content` attribute:
     always_empty</a>
 ```
 Code above represented as:
-![Inline example](http://dattaya.github.com/symfony2-cheatsheets/resources/images/readme/popup.png)
+
+![Popup](http://dattaya.github.com/symfony2-cheatsheets/resources/images/readme/popup.png)
 
 ### Example
 All code samples should be for the latest stable Symfony version (2.1 considered as stable since it will be released
@@ -66,6 +67,7 @@ have to be replaced by the HTML escape entity `&lt;`:
 `<code>&lt;a href="{{ url('_welcome') }}">Home&lt;/a></code>`.
 
 It's displayed as:
+
 ![Inline example](http://dattaya.github.com/symfony2-cheatsheets/resources/images/readme/inline_example.png)
 
 #### Example in a modal
@@ -73,7 +75,8 @@ Should be surrounded by `script` tags (see the example above) with the proper `t
 `twig`, `yaml`, `javascript`. You do not need to escape 'less-than' sign. Column title must be: `Example`.
 
 It's displayed as:
-![Inline example](http://dattaya.github.com/symfony2-cheatsheets/resources/images/readme/modal_example.png)
+
+![Modal example](http://dattaya.github.com/symfony2-cheatsheets/resources/images/readme/modal_example.png)
 
 ### Deprecated
 Use the `deprecated` class to mark something as deprecated. Could be applied to a part of text or a whole table row:
@@ -86,4 +89,5 @@ Use the `deprecated` class to mark something as deprecated. Could be applied to 
 To mark something as required use the `required` class:
 
 `<td class="required">default</td>`
-![Inline example](http://dattaya.github.com/symfony2-cheatsheets/resources/images/readme/required.png)
+
+![Required](http://dattaya.github.com/symfony2-cheatsheets/resources/images/readme/required.png)
