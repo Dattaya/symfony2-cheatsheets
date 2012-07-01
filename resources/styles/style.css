@@ -7497,6 +7497,7 @@ table th:hover {
 }
 .popup {
   cursor: pointer;
+  border-bottom: 1px dotted #969696;
 }
 .deprecated {
   color: #999999;

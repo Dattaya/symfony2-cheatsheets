@@ -114,8 +114,9 @@ amplify.subscribe( "content_loaded", function() {
 // Highlight code
 amplify.subscribe( "content_loaded", function() {
     $( "script[type=yaml]" ).attr( "type", "php" );
+    $( "script[type=twig]" ).attr( "type", "django" );
 
-    $( "script[type=javascript], script[type=php]" )
+    $( "script[type=javascript], script[type=php], script[type=django]" )
         .each( function() {
             var $pre = $( this )
                 .wrapInner( function() {
@@ -149,7 +150,7 @@ amplify.subscribe( "content_loaded", function() {
         } );
 }, 4 );
 
-// Show popovers for a[data-content]
+// Show popovers for [data-content]
 amplify.subscribe( "content_loaded", function() {
     $( "[data-content]" )
         .each( function() {

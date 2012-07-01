@@ -1,0 +1,249 @@
+<h1>Functions</h1>
+
+<h2>Core</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Function</th>
+        <th>Since</th>
+        <th>Short example/Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/functions/attribute.html">attribute</a></td>
+        <td>1.2</td>
+        <td><code>{{ attribute(object, method, arguments) }}</code>
+            Use it if you want to access an attribute of a variable using a dynamic name. The resolution
+            algorithm is the same as the one used for the <code>.</code> notation, except that the item can
+            be <strong>any</strong> valid expression.
+        </td>
+        <td>
+<script type="twig">
+{{ attribute(object, method) }}
+{{ attribute(object, method, arguments) }}
+{{ attribute(array, item) }}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/functions/range.html">range</a></td>
+        <td>1.0</td>
+        <td><code>{% for i in range(0, 6, 2) %} ...</code>
+            Returns a list containing an arithmetic progression of integers. When step is given (as the third
+            parameter), it specifies the increment (or decrement). The Twig built-in <code>..</code> operator is
+            just syntactic sugar for the <code>range</code> function.
+        </td>
+        <td>
+<script type="twig">
+{% for i in range(0, 6, 2) %}
+    {{ i }},
+{% endfor %}
+{# returns 0, 2, 4, 6 #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/functions/cycle.html">cycle</a></td>
+        <td>1.0</td>
+        <td><code>{% for i in 0..10 %} {{ cycle(['odd', 'even'], i) }} ...</code>
+            The <code>cycle</code> function cycles on an array of values.
+        </td>
+        <td>
+<script type="twig">
+{% set fruits = ['apple', 'orange', 'citrus'] %}
+
+{% for i in 0..10 %}
+    {{ cycle(fruits, i) }}
+{% endfor %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/functions/constant.html">constant</a></td>
+        <td>1.0</td>
+        <td><code>{{ some_date|date(constant('DATE_W3C')) }}</code>
+            Returns the constant value for a given string.
+        </td>
+        <td>
+<script type="twig">
+{{ constant('Namespace\\Classname::CONSTANT_NAME') }}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/functions/random.html">random</a></td>
+        <td>1.5</td>
+        <td> <code>{{ random(5) }} {# example output: 3 #}</code>
+            The random function returns a random value depending on the supplied parameter type: a random item from
+            a sequence; a random character from a string; a random integer between 0 and the integer parameter
+            (inclusive). String and integer handling was added in Twig 1.6.
+
+        </td>
+        <td>
+<script type="twig">
+{{ random(['apple', 'orange', 'citrus']) }} {# example output: orange #}
+{{ random('ABC') }} {# example output: C #}
+{{ random() }} {# example output: 15386094 (works as native PHP `mt_rand` function) #}
+{{ random(5) }} {# example output: 3 #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/functions/block.html">block</a></td>
+        <td>1.0</td>
+        <td>When a template uses inheritance and if you want to print a block multiple times, use the 
+            <code>block</code> function.
+        </td>
+        <td>
+<script type="twig">
+<title>{% block title %}{% endblock %}</title>
+
+<h1>{{ block('title') }}</h1>
+
+{% block body %}{% endblock %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/functions/parent.html">parent</a></td>
+        <td>1.0</td>
+        <td>When a template uses inheritance, it's possible to render the contents of the parent block when
+            overriding a block by using the <code>parent</code> function.
+        </td>
+        <td>
+<script type="twig">
+{% extends "base.html" %}
+
+{% block sidebar %}
+    <h3>Table Of Contents</h3>
+    ...
+    {{ parent() }}
+{% endblock %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/functions/date.html">date</a></td>
+        <td>1.6</td>
+        <td><code>{% if date(user.created_at) < date('+2days') %} ...</code>
+            Converts an argument to a date to allow date comparison. The argument must be in a format supported
+            by the <a href="http://php.net/manual/en/function.date.php">date</a> function. You can pass a timezone as
+            the second argument. If no argument is passed, it returns the current date.
+        </td>
+        <td>
+<script type="twig">
+{% if date(user.created_at) < date('+2days') %}
+    {# do something #}
+{% endif %}
+
+{# timezone: #}
+{% if date(user.created_at) < date('+2days', 'Europe/Paris') %}
+    {# do something #}
+{% endif %}
+
+{# current date: #}
+{% if date(user.created_at) < date() %}
+    {# always! #}
+{% endif %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/functions/date.html">dump</a></td>
+        <td>1.5</td>
+        <td><code>{{ dump(user) }}</code>
+            The <code>dump</code> function dumps information about a template variable.
+            This function is not available by default. You can debug several variables by passing them as
+            additional arguments. If you don't pass any value, all variables from the current context are dumped.
+        </td>
+        <td>
+<script type="twig">
+{# Using a `pre` tag is not needed when XDebug is enabled and `html_errors` is on; #}
+<pre>
+    {{ dump(user) }}
+</pre>
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Twig Bridge</h2>
+
+<h3>RoutingExtension</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Function</th>
+        <th>Since</th>
+        <th>Short example/Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>url</td>
+        <td></td>
+        <td><code>&lt;a href="{{ url('_welcome') }}">Home&lt;/a></code>
+            It generates an absolute URL. First argument - route's name, second - hash with parameters for that route.
+        </td>
+        <td>
+<script type="twig">
+<a href="{{ url('_demo_hello', { name: 'Fabien' }) }}">Hello</a>
+{# e.g. renders as: <a href="http://localhost/symfony/web/app_dev.php/demo/hello/Fabien">Hello</a> #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/book/templating.html#linking-to-pages">path</a></td>
+        <td></td>
+        <td><code>&lt;a href="{{ path('_welcome') }}">Home&lt;/a></code>
+            It generates a relative URL. First argument - route's name, second - hash with parameters for that route.
+        </td>
+        <td>
+<script type="twig">
+<a href="{{ path('_demo_hello', { name: 'Fabien' }) }}">Hello</a>
+{# e.g. renders as: <a href="/symfony/web/app_dev.php/demo/hello/Fabien">Hello</a> #}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>SecurityExtension</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Function</th>
+        <th>Since</th>
+        <th>Short example/Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/book/security.html#access-control-in-templates">is_granted</a></td>
+        <td></td>
+        <td><code>{% if is_granted('ROLE_ADMIN') %} ...</code>
+            Use it if you want to check if the current user has a role inside a template. First required argument -
+            a role; second - an object that has its own
+            <a href="http://symfony.com/doc/current/cookbook/security/acl.html">ACL</a>; third - a field to which
+            ACE is applied, see
+            <a href="http://symfony.com/doc/current/cookbook/security/acl_advanced.html#scope-of-access-control-entries">Scope
+                of Access Control Entries</a>.
+        </td>
+        <td>
+<script type="twig">
+{% if is_granted('EDIT', comment) %}
+    <a href="...">Edit</a>
+{% endif %}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>

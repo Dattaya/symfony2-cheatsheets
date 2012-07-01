@@ -51,6 +51,7 @@ public function setDefaultOptions(OptionsResolverInterface $resolver)
         <td></td>
         <td>If you want to override the property/method name that a field reads from and writes to, you can set
             the property_path option. Its default value is the field's name.
+        </td>
         <td></td>
     </tr>
     <tr>
@@ -643,7 +644,7 @@ $builder->add('startTime', 'time', array(
         <td>Creates a single input checkbox.</td>
         <td>
             <a href="http://symfony.com/doc/current/reference/forms/types/checkbox.html#value"
-               data-content="<strong>type</strong>: <code>mixed</code> <strong>default</strong>: <code>1</code>. The value that's actually used as the value for the checkbox. This does not affect the value that's set on your object.">
+               data-content="<strong>type</strong>: <code>mixed</code> <strong>default</strong>: <code>'1'</code>. The value that's actually used as the value for the checkbox. This does not affect the value that's set on your object.">
                 value</a>
         </td>
         <td>
