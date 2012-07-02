@@ -171,6 +171,39 @@ public function getDefaultOptions(array $options)
 </script>
         </td>
     </tr>
+    <tr>
+        <td>compound</td>
+        <td>2.1</td>
+        <td>bool</td>
+        <td>true</td>
+        <td>Allows you to switch between field and form behavior. <code>false</code> is for the form that can be
+            represented by a single HTML tag, in other words - 'field', <code>true</code> is for the form with children.
+        </td>
+        <td>
+<script type="php">
+// Example of how to set the 'compound' option dynamically.
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
+
+public function setDefaultOptions(OptionsResolverInterface $resolver)
+{
+    $compound = function (Options $options) {
+        return $options['expanded'];
+    };
+
+    $resolver->setDefaults(array(
+        'compound' => $compound,
+    ));
+}
+
+public function getParent()
+{
+    return 'form';
+}
+?>
+</script>
+        </td>
+    </tr>
     </tbody>
 </table>
 
