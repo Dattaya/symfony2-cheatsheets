@@ -7505,7 +7505,7 @@ table th:hover {
 .status {
   position: relative;
   top: -9px;
-  left: 1px;
+  left: -3px;
 }
 #navbar a.octocat {
   padding: 5px 0;

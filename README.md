@@ -49,8 +49,7 @@ To create a popup use a `data-content` attribute:
 
 ```html
 <a href="http://symfony.com/doc/current/reference/forms/types/password.html#always-empty"
-   data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>true</code>.
-   If set to <code>true</code>, the field will always render blank, even if the corresponding field has a value.">
+   data-content="<strong>type</strong>: <code>bool</code> <strong>default</strong>: <code>true</code>. If set to <code>true</code>, the field will always render blank, even if the corresponding field has a value.">
     always_empty</a>
 ```
 Code above represented as:
@@ -72,7 +71,7 @@ It's displayed as:
 
 #### Example in a modal
 Should be surrounded by `script` tags (see the example above) with the proper `type` attribute. Supported types: `php`,
-`twig`, `yaml`, `javascript`. You do not need to escape 'less-than' sign. Column title must be: `Example`.
+`twig`, `yaml`, `javascript`. You do not need to escape 'less-than' sign. Column title must be `Example`: `<th>Example</th>`.
 
 It's displayed as:
 
