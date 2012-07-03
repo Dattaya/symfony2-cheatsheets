@@ -1,0 +1,172 @@
+<h1>DBAL</h1>
+
+<h2>Mapping Types</h2>
+
+<h3>Strings</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Since</th>
+        <th>Maps SQL type</th>
+        <th>to PHP type</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.StringType.html">string</a></td>
+        <td>2.0</td>
+        <td><code>VARCHAR</code></td>
+        <td><code>string</code></td>
+        <td>String with maximum length, for example 255.</td>
+    </tr>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.TextType.html">text</a></td>
+        <td>2.0</td>
+        <td><code>CLOB</code></td>
+        <td><code>string</code></td>
+        <td>Strings without maximum length</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Numbers</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Since</th>
+        <th>Maps SQL type</th>
+        <th>to PHP type</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.IntegerType.html">integer</a></td>
+        <td>2.0</td>
+        <td><code>INT</code></td>
+        <td><code>integer</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.SmallIntType.html">smallint</a></td>
+        <td>2.0</td>
+        <td><code>SMALLINT</code></td>
+        <td><code>integer</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.BigIntType.html">bigint</a></td>
+        <td>2.0</td>
+        <td><code>BIGINT</code></td>
+        <td><code>string</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.DecimalType.html">decimal</a></td>
+        <td>2.0</td>
+        <td><code>DECIMAL</code></td>
+        <td><code>string</code></td>
+        <td>Restricted floats. Only works with a setlocale() configuration that uses decimal points.</td>
+    </tr>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.FloatType.html">float</a></td>
+        <td>2.0</td>
+        <td><code>FLOAT (double precision)</code></td>
+        <td><code>double</code></td>
+        <td>Only works with a setlocale() configuration that uses decimal points.</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Dates and Times</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Since</th>
+        <th>Maps SQL type</th>
+        <th>to PHP type</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.DateType.html">date</a></td>
+        <td>2.0</td>
+        <td><code>DATETIME</code></td>
+        <td><code>DateTime</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.TimeType.html">time</a></td>
+        <td>2.0</td>
+        <td><code>TIME</code></td>
+        <td><code>DateTime</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.DateTimeType.html">datetime</a></td>
+        <td>2.0</td>
+        <td><code>DATETIME/TIMESTAMP</code></td>
+        <td><code>DateTime</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.DateTimeTzType.html">datetimetz</a></td>
+        <td>2.0</td>
+        <td></td>
+        <td></td>
+        <td>Only PostgreSQL and Oracle support storing Timezone data.</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Other Types</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Since</th>
+        <th>Maps SQL type</th>
+        <th>to PHP type</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.BooleanType.html">boolean</a></td>
+        <td>2.0</td>
+        <td><code>boolean</code></td>
+        <td><code>boolean</code></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.ObjectType.html">object</a></td>
+        <td>2.0</td>
+        <td><code>CLOB</code></td>
+        <td><code>object</code></td>
+        <td>Maps to a PHP object using <code>serialize()</code> and <code>unserialize()</code>.</td>
+    </tr>
+    <tr>
+        <td><a href="http://www.doctrine-project.org/api/dbal/2.2/class-Doctrine.DBAL.Types.ArrayType.html">array</a></td>
+        <td>2.0</td>
+        <td><code>CLOB</code></td>
+        <td><code>object</code></td>
+        <td>Maps to a PHP object using <code>serialize()</code> and <code>unserialize()</code>.</td>
+    </tr>
+    <tr>
+        <td>blob</td>
+        <td>2.2</td>
+        <td><code>BLOB</code></td>
+        <td><code>resource stream</code></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
