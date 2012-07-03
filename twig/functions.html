@@ -324,6 +324,39 @@
 </script>
         </td>
     </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/twig_reference.html#form-row-form-name-variables">form_row</a></td>
+        <td>2.0</td>
+        <td><code>{{ form_row(form.name, variables) }}</code>
+            Renders the "row" of a given field, which is the combination of the field's label, errors and widget.
+        </td>
+        <td>
+<script type="twig">
+{# render a field row, but display a label with text "foo" #}
+{{ form_row(form.name, { 'label': 'foo' }) }}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/reference/forms/twig_reference.html#form-rest-form-variables">form_rest</a></td>
+        <td>2.0</td>
+        <td><code>{{ form_rest(form, variables) }}</code>
+            This renders all fields that have not yet been rendered for the given form. It's a good idea to always
+            have this somewhere inside your form as it'll render hidden fields for you and make any fields you
+            forgot to render more obvious.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>csrf_token</td>
+        <td>2.1</td>
+        <td><code>&lt;input type="hidden" name="token" value="{{ csrf_token('rm_user_' ~ user.id) }}"></code>
+            Returns a CSRF token. Use this helper for CSRF protection without the overhead of creating a form.
+            Check the token in your action using the same <code>intention</code>(first argument of the
+            <code>csrf_token</code> function).
+        </td>
+        <td></td>
+    </tr>
     </tbody>
 </table>
 
