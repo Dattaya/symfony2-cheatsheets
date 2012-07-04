@@ -1,0 +1,450 @@
+<h1>Filters</h1>
+
+<h2>Core</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Filter</th>
+        <th>Since</th>
+        <th>Short example/Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/abs.html">abs</a></td>
+        <td>1.8.2</td>
+        <td><code>{{ number|abs }}</code>
+            Returns the absolute value.
+        </td>
+        <td>
+<script type="twig">
+{# number = -5 #}
+
+{{ number|abs }}
+
+{# outputs 5 #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/capitalize.html">capitalize</a></td>
+        <td>0.9</td>
+        <td><code>{{ 'my first car'|capitalize }}</code>
+            Capitalizes a value. The first character will be uppercase,
+            all others lowercase.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/convert_encoding.html">convert_encoding</a></td>
+        <td>1.4</td>
+        <td><code>{{ data|convert_encoding('UTF-8', 'iso-2022-jp') }}</code>
+            Converts a string from one encoding to another. The first argument is the expected output charset and
+            the second one is the input charset.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/date.html">date</a></td>
+        <td>0.9</td>
+        <td><code>{{ post.published_at|date("m/d/Y") }}</code>
+            Formats a date to a given format. If no format is provided, Twig will use the default one: F j, Y H:i.
+            Second argument - a timezone.
+        </td>
+        <td>
+<script type="twig">
+{# The date filter accepts strings (it must be in a format supported by the date function) #}
+{{ "now"|date("m/d/Y") }}
+
+{# To escape words and characters in the date format use \\ #}
+{{ post.published_at|date("F jS \\a\\t g:ia") }}
+
+{# You can also specify a timezone #}
+{{ post.published_at|date("m/d/Y", "Europe/Paris") }}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/default.html">default</a></td>
+        <td>0.9</td>
+        <td><code>{{ var|default('var is not defined') }}</code>
+            Returns the passed default value if the value is undefined or empty, otherwise the value of the variable.
+        </td>
+        <td>
+<script type="twig">
+{{ var.foo|default('foo item on var is not defined') }}
+
+{{ var['foo']|default('foo item on var is not defined') }}
+
+{{ ''|default('passed var is empty')  }}
+
+{# Function that could possibly return an empty value #}
+{{ var.method(foo|default('foo'))|default('foo') }}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/escape.html">escape</a></td>
+        <td>0.9</td>
+        <td><code>{{ user.username|e }}</code>
+            Converts the characters <code>&</code>, <code><</code>, <code>></code>, <code>'</code>, and <code>"</code>
+            in strings to HTML-safe sequences. <code>e</code> is an alias. First optional argument - escaping strategy,
+            available strategies: <code class="default">html</code>,
+            <code>js</code>.
+        </td>
+        <td>
+<script type="twig">
+{{ user.username|e }}
+{# is equivalent to #}
+{{ user.username|e('html') }}
+
+{# js escaping strategy #}
+{{ user.username|e('js') }}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/format.html">format</a></td>
+        <td>0.9</td>
+        <td><code>{{ "I like %s and %s."|format(foo, "bar") }}</code>
+            Formats a given string by replacing the placeholders (placeholders follows the <code>printf</code>
+            notation).
+        </td>
+        <td>
+<script type="twig">
+{{ "I like %s and %s."|format(foo, "bar") }}
+
+{# returns I like foo and bar
+   if the foo parameter equals to the foo string. #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/join.html">join</a></td>
+        <td>0.9</td>
+        <td><code>{{ [1, 2, 3]|join('|') }}</code>
+            Returns a string which is the concatenation of the items of a sequence. The separator between elements is
+            an empty string by default.
+        </td>
+        <td>
+<script type="twig">
+{{ [1, 2, 3]|join }}
+{# returns 123 #}
+
+{{ [1, 2, 3]|join('|') }}
+{# returns 1|2|3 #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/json_encode.html">json_encode</a></td>
+        <td>0.9</td>
+        <td><code>{{ data|json_encode() }}</code>
+            Returns the JSON representation of a string. Internally, Twig uses the PHP <code>json_encode</code> function.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/keys.html">keys</a></td>
+        <td>0.9</td>
+        <td><code>{% for key in array|keys %} ...</code>
+            Returns the keys of an array. It is useful when you want to iterate over the keys of an array.
+        </td>
+        <td>
+<script type="twig">
+{% for key in array|keys %}
+    ...
+{% endfor %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/length.html">length</a></td>
+        <td>0.9</td>
+        <td><code>{% if users|length > 10 %} ...</code>
+            Returns the number of items of a sequence or mapping, or the length of a string.
+        <td>
+<script type="twig">
+{% if users|length > 10 %}
+    ...
+{% endif %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/lower.html">lower</a></td>
+        <td>0.9</td>
+        <td><code>{{ 'WELCOME'|lower }}</code>
+            Converts a value to lowercase.
+        <td>
+<script type="twig">
+{{ 'WELCOME'|lower }}
+
+{# outputs 'welcome' #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/merge.html">merge</a></td>
+        <td>0.9</td>
+        <td><code>{% set values = values|merge(['apple', 'orange']) %}</code>
+            Merges an array with the another array. New values are added at the end of the existing ones.
+            The <code>merge</code> filter also works on hashes (if the key already exists, its value is overridden).
+        <td>
+<script type="twig">
+{# 1. #}
+{% set values = [1, 2] %}
+{% set values = values|merge(['apple', 'orange']) %}
+
+{# values now contains [1, 2, 'apple', 'orange'] #}
+
+{# 2. merging hashes #}
+{% set items = { 'apple': 'fruit', 'orange': 'fruit', 'peugeot': 'unknown' } %}
+{% set items = items|merge({ 'peugeot': 'car', 'renault': 'car' }) %}
+
+{# items now contains { 'apple': 'fruit', 'orange': 'fruit', 'peugeot': 'car', 'renault': 'car' } #}
+
+{# 3. If you want to ensure that some values are defined in an array (by given default values), reverse the two elements in the call: #}
+
+{% set items = { 'apple': 'fruit', 'orange': 'fruit' } %}
+{% set items = { 'apple': 'unknown' }|merge(items) %}
+
+{# items now contains { 'apple': 'fruit', 'orange': 'fruit' } #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/nl2br.html">nl2br</a></td>
+        <td>1.5</td>
+        <td><code>{{ "I like Twig.\nYou will like it too."|nl2br }}</code>
+            Inserts HTML line breaks before all newlines in a string. The <code>nl2br</code> filter pre-escapes the
+            input before applying the transformation.
+        <td>
+<script type="twig">
+{{ "I like Twig.\nYou will like it too."|nl2br }}
+{# outputs
+
+    I like Twig.<br />
+    You will like it too.
+
+#}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/number_format.html">number_format</a></td>
+        <td>1.5</td>
+        <td><code>{{ 200.35|number_format }}</code>
+            Formats numbers. It is a wrapper around PHP's <code>number_format</code> function.
+            You can control the number of decimal places, decimal point, and thousands separator using the
+            additional arguments. If no formatting options are provided, defaults: 0 decimal places,
+            <code>.</code> as the decimal point, <code>,</code> as the thousands separator.
+        <td>
+<script type="twig">
+{{ 9800.333|number_format(2, ',', '.') }}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/raw.html">raw</a></td>
+        <td>0.9</td>
+        <td><code>{{ var|raw }}</code>
+            Marks the value as being "safe", which means that in an environment with automatic escaping enabled
+            this variable will not be escaped if <code>raw</code> is the last filter applied to it.
+        <td>
+<script type="twig">
+{% autoescape true %}
+    {{ var|raw }} {# var won't be escaped #}
+{% endautoescape %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/replace.html">replace</a></td>
+        <td>0.9</td>
+        <td><code>{{ "I like %this% and %that%."|replace({'%this%': foo, '%that%': "bar"}) }}</code>
+            Formats a given string by replacing the placeholders (placeholders are free-form).
+        <td>
+<script type="twig">
+{{ "I like %this% and %that%."|replace({'%this%': foo, '%that%': "bar"}) }}
+
+{# returns I like foo and bar
+   if the foo parameter equals to the foo string. #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/reverse.html">reverse</a></td>
+        <td>0.9</td>
+        <td><code>{% for use in users|reverse %}</code>
+            Reverses a sequence, a mapping, or a string (strings supported since 1.6). It also works with objects
+            implementing the <code>Traversable</code> interface.
+        <td>
+<script type="twig">
+{% for use in users|reverse %}
+    ...
+{% endfor %}
+
+{{ '1234'|reverse }}
+{# outputs 4321 #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/slice.html">slice</a></td>
+        <td>1.6</td>
+        <td><code>{% for i in [1, 2, 3, 4]|slice(1, 2) %}</code>
+            Extracts a slice of a sequence, a mapping, a string or an object (implemented <code>Traversable</code>
+            interface). As syntactic sugar, you can use the <code>[]</code> notation.
+            The <code>slice</code> filter works as the <code>array_slice </code>PHP function for arrays and
+            <code>substr</code> for strings. The start and the length arguments could be negative.
+        <td>
+<script type="twig">
+{# 1. #}
+{% for i in [1, 2, 3, 4]|slice(1, 2) %}
+    {# will iterate over 2 and 3 #}
+{% endfor %}
+
+{# 2. #}
+{{ '1234'|slice(1, 2) }}
+{# outputs 23 #}
+
+{# 3. expression for the start and the length #}
+{% for i in [1, 2, 3, 4]|slice(start, length) %}
+    {# ... #}
+{% endfor %}
+
+{# 4. [] notation #}
+{% for i in [1, 2, 3, 4][start:length] %}
+    {# ... #}
+{% endfor %}
+
+{{ '1234'[1:2] }}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/sort.html">sort</a></td>
+        <td>1.6</td>
+        <td><code>{% for use in users|sort %}</code>
+            Sorts an array. Internally, Twig uses the PHP <code>asort</code> function to maintain index association.
+        <td>
+<script type="twig">
+{% for use in users|sort %}
+    ...
+{% endfor %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/striptags.html">striptags</a></td>
+        <td>0.9</td>
+        <td><code>{% some_html|striptags %}</code>
+            Strips SGML/XML tags and replace adjacent whitespace by one space. Internally, Twig uses the PHP
+            <code>strip_tags</code> function.
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/title.html">title</a></td>
+        <td>1.6</td>
+        <td><code>{{ 'my first car'|title }}</code>
+            Returns a titlecased version of the value. Words will start with uppercase letters, all remaining
+            characters are lowercased.
+        <td>
+<script type="twig">
+{{ 'my first car'|title }}
+
+{# outputs 'My First Car' #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/trim.html">trim</a></td>
+        <td>1.6.2</td>
+        <td><code>{{ '  I like Twig.  '|trim }}</code>
+            Trips whitespace (or other characters) from the beginning and end of a string.
+            Internally, Twig uses the PHP <code>trim</code> function.
+        <td>
+<script type="twig">
+{{ '  I like Twig.  '|trim }}
+{# outputs 'I like Twig.' #}
+
+{{ '  I like Twig.'|trim('.') }}
+{# outputs '  I like Twig' #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/upper.html">upper</a></td>
+        <td>0.9</td>
+        <td><code>{{ 'welcome'|upper }}</code>
+            Converts a value to uppercase.
+        <td>
+<script type="twig">
+{{ 'welcome'|upper }}
+{# outputs 'WELCOME' #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/filters/url_encode.html">url_encode</a></td>
+        <td>0.9</td>
+        <td><code>{{ data|url_encode() }}</code>
+            URL-encodes a given string. Internally, Twig uses the PHP <code>urlencode</code> function.
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Twig Bridge</h2>
+
+<h3>YamlExtension</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Filter</th>
+        <th>Since</th>
+        <th>Short example/Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>yaml_encode</td>
+        <td>2.0</td>
+        <td><code>{{ query.params|yaml_encode }}</code>
+            Returns YAML representation of the variable. The first argument customizes the level at which the output
+            switches from the expanded representation to the inline one.
+        </td>
+        <td>
+<script type="twig">
+{{ { 'foo': 'bar', 'bar': { 'foo': 'bar', 'bar': 'baz' } }|yaml_encode(1) }}
+{# result:
+foo: bar
+bar: { foo: bar, bar: baz }
+#}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>yaml_dump</td>
+        <td>2.0</td>
+        <td><code>{{ variable|yaml_encode }}</code>
+            Dumps a variable to its YAML representation.
+        </td>
+        <td>
+<script type="twig">
+{{ { 'foo': 'bar', 'bar': { 'foo': 'bar', 'bar': 'baz' } }|yaml_dump }}
+{# outputs '%array% { foo: bar, bar: { foo: bar, bar: baz } }' #}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<footer>To create these tables data from <a href="https://github.com/symfony/symfony-docs">Symfony</a>
+    and <a href="https://github.com/fabpot/Twig/tree/master/doc">Twig</a> documentation were used.
+</footer>
