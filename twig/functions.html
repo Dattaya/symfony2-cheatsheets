@@ -360,6 +360,59 @@
     </tbody>
 </table>
 
+<h2>Twig Bundle</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Function</th>
+        <th>Since</th>
+        <th>Short example/Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/book/templating.html#linking-to-assets">asset</a></td>
+        <td>2.0</td>
+        <td><code>&lt;img src="{{ asset('images/logo.png') }}" alt="Symfony!" /></code>
+            Returns the public path of an asset.
+        </td>
+        <td>
+<script type="twig">
+{# 'app/Resources/views/base.html.twig' #}
+<html>
+    <head>
+        {# ... #}
+
+        {% block stylesheets %}
+            <link href="{{ asset('/css/main.css') }}" type="text/css" rel="stylesheet" />
+        {% endblock %}
+    </head>
+    <body>
+        {# ... #}
+
+        {% block javascripts %}
+            < script src="{{ asset('/js/main.js') }}" type="text/javascript">< /script>
+        {% endblock %}
+    </body>
+</html>
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>assets_version</td>
+        <td>2.0</td>
+        <td><code>{{ assets_version() }}</code>
+            Returns <code><a href="http://symfony.com/doc/current/reference/configuration/framework.html#assets-version">
+            assets_version</a></code>. The <code>assets_version</code> option is set in the config file and
+            used to bust the cache on assets.
+        </td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
 <footer>To create these tables data from <a href="https://github.com/symfony/symfony-docs">Symfony</a>
     and <a href="https://github.com/fabpot/Twig/tree/master/doc">Twig</a> documentation were used.
 </footer>

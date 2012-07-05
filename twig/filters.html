@@ -445,6 +445,76 @@ bar: { foo: bar, bar: baz }
     </tbody>
 </table>
 
+<h3>TranslationExtension</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Filter</th>
+        <th>Since</th>
+        <th>Short example/Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>trans</td>
+        <td>2.0</td>
+        <td><code>{{ message|trans }}</code>
+            Translates message. The first argument is an array of parameters for the message. Second - the message
+            domain (default domain is <code>messages</code>), third - the locale.
+        </td>
+        <td>
+<script type="twig">
+{{ message|trans({'%name%': 'Fabien'}, "app") }}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>transchoice</td>
+        <td>2.0</td>
+        <td><code>{{ message|transchoice(5) }}</code>
+            Translates pluralized message. The first argument is the number of objects being described and is used
+            to determine which translation to use and also to populate the <code>%count%</code> placeholder;
+            second argument - an array of parameters for the message; third - the message domain, fourth - the locale.
+        </td>
+        <td>
+<script type="twig">
+{{ message|transchoice(5, {'%name%': 'Fabien'}, 'app') }}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>TwigBundle</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Filter</th>
+        <th>Since</th>
+        <th>Short example/Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>abbr_class</td>
+        <td>2.0</td>
+        <td><code>{{ previous.class|abbr_class }}</code>
+            Abbreviates class.
+        </td>
+        <td>
+<script type="twig">
+{{ 'Acme\DemoBundle\Controller\DemoController'|abbr_class }}
+{# outputs '<abbr title="AcmeDemoBundleControllerDemoController">AcmeDemoBundleControllerDemoController</abbr>' #}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 <footer>To create these tables data from <a href="https://github.com/symfony/symfony-docs">Symfony</a>
     and <a href="https://github.com/fabpot/Twig/tree/master/doc">Twig</a> documentation were used.
 </footer>
