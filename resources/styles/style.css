@@ -7505,6 +7505,13 @@ table th:hover {
 .default {
   font-weight: bold;
 }
+table.small {
+  font-size: 11px;
+}
+table.small th,
+table.small td {
+  padding: 2px;
+}
 table tr .required {
   color: #df8505;
 }

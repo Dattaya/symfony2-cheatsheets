@@ -112,8 +112,18 @@ table {
     font-weight: bold;
 }
 
-table tr .required {
-    color: #df8505;
+table {
+    &.small {
+        font-size: @baseFontSize - 2;
+
+        th, td {
+            padding: 2px;
+        }
+    }
+
+    tr .required {
+       color: #df8505;
+    }
 }
 
 .status {

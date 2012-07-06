@@ -1,4 +1,4 @@
-# Symfony2 cheatsheets
+# Symfony2 cheat sheets
 ## Contribution notes
 Contributing is fairly easy, all you need to know is some basic html tags. Every page starts with `h1` tag -
 header of the page, all present `h2` tags automatically included into sub navigation bar. Example of a page:
