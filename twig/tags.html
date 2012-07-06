@@ -1,0 +1,284 @@
+<h1>Tags</h1>
+
+<h2>Core</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Tag</th>
+        <th>Since</th>
+        <th>Short example/Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/autoescape.html">autoescape</a></td>
+        <td>0.9</td>
+        <td><code>{% autoescape 'js' %} ...</code>
+            Whether automatic escaping is enabled or not, you can mark a section of a template to be escaped or not
+            by using the <code>autoescape</code> tag. Syntax changed as of Twig 1.8.
+        </td>
+        <td>
+<script type="twig">
+{# The following syntax works as of Twig 1.8 -- see the note below for previous versions #}
+{% autoescape %}
+    Everything will be automatically escaped in this block
+    using the HTML strategy
+{% endautoescape %}
+
+{% autoescape 'html' %}
+    Everything will be automatically escaped in this block
+    using the HTML strategy
+{% endautoescape %}
+
+{% autoescape 'js' %}
+    Everything will be automatically escaped in this block
+    using the js escaping strategy
+{% endautoescape %}
+
+{% autoescape false %}
+    Everything will be outputted as is in this block
+{% endautoescape %}
+
+{# Before 1.8 #}
+{% autoescape true %}
+    Everything will be automatically escaped in this block
+    using the HTML strategy
+{% endautoescape %}
+
+{% autoescape false %}
+    Everything will be outputted as is in this block
+{% endautoescape %}
+
+{% autoescape true js %}
+    Everything will be automatically escaped in this block
+    using the js escaping strategy
+{% endautoescape %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/block.html">block</a></td>
+        <td>0.9</td>
+        <td><code>&lt;title>{% block title %}{% endblock %}&lt;/title></code>
+            Blocks are used for inheritance and act as placeholders and replacements at the same time. (see
+            <code>extends</code> tag) Block names should consist of alphanumeric characters, and underscores.
+            Dashes are not permitted.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/do.html">do</a></td>
+        <td>1.5</td>
+        <td><code>{% do 1 + 2 %}</code>
+            The <code>do</code> tag works exactly like the regular variable expression (<code>{{ ... }}</code>)
+            just that it doesn't print anything.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/embed.html">embed</a></td>
+        <td>1.8</td>
+        <td><code>{% embed "teasers_skeleton.twig" %}</code>
+            The <code>embed</code> tag combines the behaviour of <code>include</code> and <code>extends</code>.
+            It allows you to include another template's contents, just like <code>include</code> does. But it also
+            allows you to override any block defined inside the included template, like when extending a template.
+            It takes the exact same arguments as the include tag.
+        </td>
+        <td>
+<script type="twig">
+{# 1. #}
+{# foo.twig #}
+{% extends "layout_skeleton.twig" %}
+
+{% block content %}
+    {% embed "vertical_boxes_skeleton.twig" %}
+        {% block top %}
+            Some content for the top box
+        {% endblock %}
+
+        {% block bottom %}
+            Some content for the bottom box
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{# vertical_boxes_skeleton.twig #}
+<div class="top_box">
+    {% block top %}
+        Top box default content
+    {% endblock %}
+</div>
+
+<div class="bottom_box">
+    {% block bottom %}
+        Bottom box default content
+    {% endblock %}
+</div>
+
+{# 2. The embed tag takes the exact same arguments as the include tag: #}
+{% embed "base" with {'foo': 'bar'} %}
+    ...
+{% endembed %}
+
+{% embed "base" with {'foo': 'bar'} only %}
+    ...
+{% endembed %}
+
+{% embed "base" ignore missing %}
+    ...
+{% endembed %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/filter.html">filter</a></td>
+        <td>0.9</td>
+        <td><code>{% filter upper %} This text becomes uppercase ...</code>
+            Allow you to apply regular Twig filters on a block of template data.
+        </td>
+        <td>
+<script type="twig">
+{% filter upper %}
+    This text becomes uppercase
+{% endfilter %}
+
+{# You can also chain filters: #}
+{% filter lower|escape %}
+    <strong>SOME TEXT</strong>
+{% endfilter %}
+
+{# outputs "&lt;strong&gt;some text&lt;/strong&gt;" #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/flush.html">flush</a></td>
+        <td>1.5</td>
+        <td><code>{% flush %}</code>
+            Tells Twig to flush the output buffer. Internally, Twig uses the PHP <code>flush</code> function.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/for.html">for</a></td>
+        <td>0.9</td>
+        <td><code>{% for key, user in users %} ...</code>
+            Loop over each item in a sequence. A sequence can be either an array or an object implementing the
+            <code>Traversable</code>interface. Inside of a for loop block you can access some special
+            <span data-content="
+                <table class='small'>
+                    <tbody>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>loop.index</td>
+                        <td>The current iteration of the loop. (1 indexed)</td>
+                    </tr>
+                    <tr>
+                        <td>loop.index0</td>
+                        <td>The current iteration of the loop. (0 indexed)</td>
+                    </tr>
+                    <tr>
+                        <td>loop.revindex</td>
+                        <td>The number of iterations from the end of the loop (1 indexed)</td>
+                    </tr>
+                    <tr>
+                        <td>loop.revindex0</td>
+                        <td>The number of iterations from the end of the loop (0 indexed)</td>
+                    </tr>
+                    <tr>
+                        <td>loop.first</td>
+                        <td>True if first iteration</td>
+                    </tr>
+                    <tr>
+                        <td>loop.last</td>
+                        <td>True if last iteration</td>
+                    </tr>
+                    <tr>
+                        <td>loop.length</td>
+                        <td>The number of items in the sequence</td>
+                    </tr>
+                    <tr>
+                        <td>loop.parent</td>
+                        <td>The parent context</td>
+                    </tr>
+                    </tbody>
+                </table>
+            ">variables</span>. As of 1.2 the <code>if</code> modifier support has been added. If no iteration took
+            place because the sequence was empty, you can render a replacement block by using the <code>else</code>
+            clause.
+        </td>
+        <td>
+<script type="twig">
+{# 1. #}
+<h1>Members</h1>
+<ul>
+    {% for user in users %}
+        <li>{{ user.username|e }}</li>
+    {% endfor %}
+</ul>
+
+{# 2. Iterating over a sequence of numbers: #}
+{% for i in 0..10 %}
+    * {{ i }}
+{% endfor %}
+
+{# 3. Over letters: #}
+{% for letter in 'a'..'z' %}
+    * {{ letter }}
+{% endfor %}
+
+{# 4. The .. operator can take any expression at both sides: #}
+{% for letter in 'a'|upper..'z'|upper %}
+    * {{ letter }}
+{% endfor %}
+
+{# 5. Usage of `loop` variable: #}
+{% for user in users %}
+    {{ loop.index }} - {{ user.username }}
+{% endfor %}
+
+{# 6. `if` modifier: #}
+<ul>
+    {% for user in users if user.active %}
+        <li>{{ user.username|e }}</li>
+    {% endfor %}
+</ul>
+
+{# 7. `else` clause usage: #}
+<ul>
+    {% for user in users %}
+        <li>{{ user.username|e }}</li>
+    {% else %}
+        <li><em>no user found</em></li>
+    {% endfor %}
+</ul>
+
+{# 8. Iterating over keys with help of the `keys` filter: #}
+<h1>Members</h1>
+<ul>
+    {% for key in users|keys %}
+        <li>{{ key }}</li>
+    {% endfor %}
+</ul>
+
+{# 9. Iterating over keys and values: #}
+<h1>Members</h1>
+<ul>
+    {% for key, user in users %}
+        <li>{{ key }}: {{ user.username|e }}</li>
+    {% endfor %}
+</ul>
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<footer>To create these tables data from <a href="https://github.com/symfony/symfony-docs">Symfony</a>
+    and <a href="https://github.com/fabpot/Twig/tree/master/doc">Twig</a> documentation were used.
+</footer>
