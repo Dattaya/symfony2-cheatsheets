@@ -1,0 +1,139 @@
+<h1>Tests</h1>
+
+<h2>Core</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Filter</th>
+        <th>Since</th>
+        <th>Short example/Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tests/constant.html">constant</a></td>
+        <td>0.9</td>
+        <td><code>{% if post.status is constant('Post::PUBLISHED') %}</code>
+            Checks if a variable has the exact same value as a constant.
+        </td>
+        <td>
+<script type="twig">
+{% if post.status is constant('Post::PUBLISHED') %}
+    the status attribute is exactly the same as Post::PUBLISHED
+{% endif %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tests/defined.html">defined</a></td>
+        <td>0.9</td>
+        <td><code>{% if foo is defined %}</code>
+            Checks if a variable is defined in the current context.
+        </td>
+        <td>
+<script type="twig">
+{# defined works with variable names #}
+{% if foo is defined %}
+    ...
+{% endif %}
+
+{# and attributes on variables names #}
+{% if foo.bar is defined %}
+    ...
+{% endif %}
+
+{% if foo['bar'] is defined %}
+    ...
+{% endif %}
+
+{% if var is defined and foo.method(var) is defined %}
+    ...
+{% endif %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tests/divisibleby.html">divisibleby</a></td>
+        <td>0.9</td>
+        <td><code>{% if loop.index is divisibleby(3) %} ...</code>
+            Checks if a variable is divisible by a number.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tests/empty.html">empty</a></td>
+        <td>0.9</td>
+        <td><code>{% if foo is empty %} ...</code>
+            Checks if a variable is empty. Evaluates to <code>true</code> if the foo variable is <code>null</code>,
+            <code>false</code>, or the empty string.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tests/even.html">even</a></td>
+        <td>0.9</td>
+        <td><code>{{ var is even }}</code>
+            Returns true if the given number is even.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tests/iterable.html">iterable</a></td>
+        <td>1.7</td>
+        <td><code>{% if users is iterable %}</code>
+            Checks if a variable is an array or a traversable object.
+        </td>
+        <td>
+<script type="twig">
+{# evaluates to true if the foo variable is iterable #}
+{% if users is iterable %}
+    {% for user in users %}
+        Hello {{ user }}!
+    {% endfor %}
+{% else %}
+    {# users is probably a string #}
+    Hello {{ users }}!
+{% endif %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tests/null.html">null</a></td>
+        <td>0.9</td>
+        <td><code>{{ var is null }}</code>
+            Returns <code>true</code> if the variable is <code>null</code>. <code>none</code> is an alias for
+            <code>null</code>.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tests/odd.html">odd</a></td>
+        <td>0.9</td>
+        <td><code>{{ var is odd }}</code>
+            Returns <code>true</code> if the given number is odd.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tests/sameas.html">sameas</a></td>
+        <td>0.9</td>
+        <td><code>{% if foo.attribute is sameas(false) %} ...</code>
+            Checks if a variable points to the same memory address than another variable.
+        </td>
+        <td>
+<script type="twig">
+{% if foo.attribute is sameas(false) %}
+    the foo attribute really is the ``false`` PHP value
+{% endif %}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<footer>To create these tables data from <a href="https://github.com/symfony/symfony-docs">Symfony</a>
+    and <a href="https://github.com/fabpot/Twig/tree/master/doc">Twig</a> documentation were used. Symfony and Twig
+    documentations are licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a> license.
+</footer>
