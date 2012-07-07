@@ -276,9 +276,398 @@
 </script>
         </td>
     </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/from.html">from</a></td>
+        <td>0.9</td>
+        <td><code>{% from 'forms.html' import input as input_field, textarea %} ...</code>
+            Imports <code>macro</code> names into the current namespace. See also <code>import</code> and
+            <code>macro</code> tags.
+        </td>
+        <td>
+<script type="twig">
+{# forms.html: #}
+{% macro input(name, value, type, size) %}
+    <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
+{% endmacro %}
+
+{% macro textarea(name, value, rows) %}
+    <textarea name="{{ name }}" rows="{{ rows|default(10) }}" cols="{{ cols|default(40) }}">{{ value|e }}</textarea>
+{% endmacro %}
+
+{# importing names: #}
+{% from 'forms.html' import input as input_field, textarea %}
+
+<dl>
+    <dt>Username</dt>
+    <dd>{{ input_field('username') }}</dd>
+    <dt>Password</dt>
+    <dd>{{ input_field('password', '', 'password') }}</dd>
+</dl>
+<p>{{ textarea('comment') }}</p>
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/if.html">if</a></td>
+        <td>0.9</td>
+        <td><code>{% if online == false %} ...</code>
+            The <code>if</code> statement in Twig is comparable with the if statements of PHP. You can also test if
+            an array is not empty. If you want to test if the variable is defined, use <code>if users is defined</code>.
+            For multiple branches <code>elseif</code> and <code>else</code> can be used like in PHP.
+        </td>
+        <td>
+<script type="twig">
+{% if online == false %}
+    <p>Our website is in maintenance mode. Please, come back later.</p>
+{% endif %}
+
+{# testing if an array is not empty: #}
+{% if users %}
+    <ul>
+        {% for user in users %}
+            <li>{{ user.username|e }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{# else and elseif example: #}
+{% if kenny.sick %}
+    Kenny is sick.
+{% elseif kenny.dead %}
+    You killed Kenny!  You bastard!!!
+{% else %}
+    Kenny looks okay --- so far
+{% endif %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/import.html">import</a></td>
+        <td>0.9</td>
+        <td><code>{% import 'forms.html' as forms %} ...</code>
+            Imports <code>macro</code> names into the current namespace. Importing is not needed if the macros and
+            the template are defined in the same file; use the special <code>_self</code> variable instead.
+            See also <code>from</code> and <code>macro</code> tags.
+        </td>
+        <td>
+<script type="twig">
+{# 1. #}
+{# forms.html: #}
+{% macro input(name, value, type, size) %}
+    <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
+{% endmacro %}
+
+{% macro textarea(name, value, rows) %}
+    <textarea name="{{ name }}" rows="{{ rows|default(10) }}" cols="{{ cols|default(40) }}">{{ value|e }}</textarea>
+{% endmacro %}
+
+{# importing the whole module into a variable: #}
+{% import 'forms.html' as forms %}
+
+<dl>
+    <dt>Username</dt>
+    <dd>{{ forms.input('username') }}</dd>
+    <dt>Password</dt>
+    <dd>{{ forms.input('password', null, 'password') }}</dd>
+</dl>
+<p>{{ forms.textarea('comment') }}</p>
+
+{# 2. _self variable #}
+{# index.html template: #}
+
+{% macro textarea(name, value, rows) %}
+    <textarea name="{{ name }}" rows="{{ rows|default(10) }}" cols="{{ cols|default(40) }}">{{ value|e }}</textarea>
+{% endmacro %}
+
+<p>{{ _self.textarea('comment') }}</p>
+
+{# 3. You can create an alias by importing from the _self variable #}
+{# index.html template: #}
+
+{% macro textarea(name, value, rows) %}
+    <textarea name="{{ name }}" rows="{{ rows|default(10) }}" cols="{{ cols|default(40) }}">{{ value|e }}</textarea>
+{% endmacro %}
+
+{% import _self as forms %}
+
+<p>{{ forms.textarea('comment') }}</p>
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/include.html">include</a></td>
+        <td>0.9</td>
+        <td><code>{% include 'header.html' %}</code>
+            Includes a template. Included templates have access to the variables of the active context.
+            To disable access use <code>only</code> keyword. You can add additional variables by passing them
+            after the <code>with</code> keyword. The template name can be any valid Twig expression. In 2.1
+            added <code>ignore missing</code> feature - Twig will ignore the statement if the template does not exist
+            and added possibility to pass an array of templates. The first template that exists will be included.
+        </td>
+        <td>
+<script type="twig">
+{# 1. Passing additional variables #}
+{# the foo template will have access to the variables from the current context and the foo one #}
+{% include 'foo' with {'foo': 'bar'} %}
+
+{% set vars = {'foo': 'bar'} %}
+{% include 'foo' with vars %}
+
+{# 2. Disabling access to the context #}
+{# only the foo variable will be accessible #}
+{% include 'foo' with {'foo': 'bar'} only %}
+
+{# no variable will be accessible #}
+{% include 'foo' only %}
+
+{# 3. Using expression as a template name #}
+{% include some_var %}
+{% include ajax ? 'ajax.html' : 'not_ajax.html' %}
+
+{# 4. `ignore missing` #}
+{% include "sidebar.html" ignore missing %}
+{% include "sidebar.html" ignore missing with {'foo': 'bar} %}
+{% include "sidebar.html" ignore missing only %}
+
+{# 5. Passing an array of templates #}
+{% include ['page_detailed.html', 'page.html'] %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/macro.html">macro</a></td>
+        <td>0.9</td>
+        <td><code>{% macro input(name, value, type, size) %} ...</code>
+            Macros are like functions in programming languages. Default argument values are defined by using the
+            <code>default</code> filter in the macro body. Arguments are always optional. Macros don't have access
+            to the current template variables. You can pass the whole context as an argument by using the
+            <code>_context</code> variable. Macros should be imported before being used, see <code>import</code>
+            and <code>from</code> tags.
+        </td>
+        <td>
+<script type="twig">
+{% macro input(name, value, type, size) %}
+    <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
+{% endmacro %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/raw.html">raw</a></td>
+        <td>0.9</td>
+        <td><code>{% raw %} ...</code>
+            Marks sections as being raw text that should not be parsed.
+        </td>
+        <td>
+<script type="twig">
+{% raw %}
+    <ul>
+    {% for item in seq %}
+        <li>{{ item }}</li>
+    {% endfor %}
+    </ul>
+{% endraw %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/sandbox.html">sandbox</a></td>
+        <td>0.9</td>
+        <td><code>{% sandbox %} {% include 'user.html' %} ...</code>
+            Can be used to enable the sandboxing mode for an included template. The <code>sandbox</code> tag can
+            only be used to sandbox an include tag and it cannot be used to sandbox a section of a template.
+        </td>
+        <td>
+<script type="twig">
+{% sandbox %}
+    {% for i in 1..2 %}
+        {{ i }}
+    {% endfor %}
+{% endsandbox %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/set.html">set</a></td>
+        <td>0.9</td>
+        <td><code>{% set foo, bar = 'foo', 'bar' %}</code>
+            Assigns values to variables. The set tag can also be used to 'capture' chunks of text.
+        </td>
+        <td>
+<script type="twig">
+{% set foo = 'foo' %}
+
+{% set foo = [1, 2] %}
+
+{% set foo = {'foo': 'bar'} %}
+
+{% set foo = 'foo' ~ 'bar' %}
+
+{% set foo, bar = 'foo', 'bar' %}
+
+{% set foo %}
+  <div id="pagination">
+    ...
+  </div>
+{% endset %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/spaceless.html">spaceless</a></td>
+        <td>0.9</td>
+        <td>Use the spaceless tag to remove whitespace <strong>between HTML tags</strong>.</td>
+        <td>
+<script type="twig">
+{% spaceless %}
+    <div>
+        <strong>foo</strong>
+    </div>
+{% endspaceless %}
+
+{# output will be <div><strong>foo</strong></div> #}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://twig.sensiolabs.org/doc/tags/use.html">use</a></td>
+        <td>0.9</td>
+        <td><code>{% use "blocks.html" %}</code>
+            Imports blocks into the current template (it's like macros, but for blocks). Only imports a template if
+            it does not extend another template, if it does not define macros, and if the body is empty. To avoid
+            name conflicts, you can rename imported blocks. Since 1.3 the <code>parent()</code> function works
+            correctly inside an imported template. See also <code>embed</code> tag.
+        </td>
+        <td>
+<script type="twig">
+{# 1. #}
+{# blocks.html: #}
+{% block sidebar %}{% endblock %}
+
+{# Blocks importing: #}
+{% extends "base.html" %}
+
+{% use "blocks.html" %}
+
+{% block title %}{% endblock %}
+{% block content %}{% endblock %}
+
+{# 2. To avoid name conflicts, you can rename imported blocks: #}
+{% extends "base.html" %}
+
+{% use "blocks.html" with sidebar as base_sidebar %}
+
+{% block sidebar %}{% endblock %}
+{% block title %}{% endblock %}
+{% block content %}{% endblock %}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Twig Bridge</h2>
+
+<h3>TranslationExtension</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Tag</th>
+        <th>Since</th>
+        <th>Short example/Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/book/translation.html#twig-templates">trans</a></td>
+        <td>2.0</td>
+        <td><code>{% trans %}Hello %name%{% endtrans %}</code>
+            Translates a message. After <code>with</code> keyword an array of parameters for the message could be
+            passed. After <code>from</code> - the message domain, and after <code>into</code> - the locale.
+        </td>
+        <td>
+<script type="twig">
+{% trans with {'%name%': 'Fabien'} from "app" %}Hello %name%{% endtrans %}
+
+{% trans with {'%name%': 'Fabien'} from "app" into "fr" %}Hello %name%{% endtrans %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/book/translation.html#twig-templates">transchoice</a></td>
+        <td>2.0</td>
+        <td><code>{% transchoice count %} ...</code>
+            Translates a pluralized message. Passed variable (<code>count</code>) is the number of objects being
+            described and is used to determine which translation to use and also to populate the %count% placeholder;
+            After <code>with</code> keyword an array of parameters for the message could be
+            passed. After <code>from</code> - the message domain, and after <code>into</code> - the locale.
+        </td>
+        <td>
+<script type="twig">
+{% transchoice count %}
+    {0} There are no apples|{1} There is one apple|]1,Inf] There are %count% apples
+{% endtranschoice %}
+
+{% transchoice count with {'%name%': 'Fabien'} from "app" %}
+    {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
+{% endtranschoice %}
+</script>
+        </td>
+    </tr>
+    <tr>
+        <td>trans_default_domain</td>
+        <td>2.1</td>
+        <td><code>{% trans_default_domain "foobar" %}</code>
+            Sets the default domain for all messages inside the template. You can use several
+            <code>trans_default_domain</code> tags to set the default domain for a part of the template.
+        </td>
+        <td>
+<script type="twig">
+{% trans_default_domain "foobar" %}
+
+{# Now for all tags bellow `domain` is set to "foobar": #}
+{% trans with {'%name%': 'Fabien'} from "app" %}Hello %name%{% endtrans %}
+
+{% transchoice count %}
+    {0} There are no apples|{1} There is one apple|]1,Inf] There are %count% apples
+{% endtranschoice %}
+</script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Twig Bundle</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Tag</th>
+        <th>Since</th>
+        <th>Short example/Description</th>
+        <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="http://symfony.com/doc/current/book/templating.html#embedding-controllers">render</a></td>
+        <td>2.0</td>
+        <td><code>{% render "AcmeArticleBundle:Article:recentArticles" with {'max': 3} %}</code>
+            Embeds a controller inside a template. Second argument (after <code>with</code>) is an array of request
+            attributes. Third is an array of options (e.g. you can set <code>standalone</code> option).
+        </td>
+        <td>
+<script type="twig">
+{% render 'BlogBundle:Post:list' with { 'limit': 2 }, { 'alt': 'BlogBundle:Post:error' } %}
+</script>
+        </td>
+    </tr>
     </tbody>
 </table>
 
 <footer>To create these tables data from <a href="https://github.com/symfony/symfony-docs">Symfony</a>
-    and <a href="https://github.com/fabpot/Twig/tree/master/doc">Twig</a> documentation were used.
+    and <a href="https://github.com/fabpot/Twig/tree/master/doc">Twig</a> documentation were used. Symfony and Twig
+    documentations are licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a> license.
 </footer>
