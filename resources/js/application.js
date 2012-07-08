@@ -2,17 +2,19 @@ var startPath = $( "#navbar a" ).first().attr( "href" );
 var previousPath;
 
 var normalizePath = function( path ) {
-    if ( !path ) {
-        return;
+    if ( path ) {
+        if ( getHash( path ) ) {
+            return path.substring( 0, path.lastIndexOf( "/" ) );
+        }
+        return path;
     }
-    return "#" + path.split( "#" )[1];
 };
 
 var getHash = function( path ) {
-    var hash = path.split( "#" )[2];
-    if ( hash ) {
-        return "#" + hash;
+    if ( path.match( /\.html$/ ) ) {
+        return;
     }
+    return path.substr( path.lastIndexOf( "/" ) );
 };
 
 // SIDEBAR
@@ -67,19 +69,19 @@ amplify.subscribe( "content_loaded", function() {
         .scrollspy( { target: "#subnav", offset: 100 } )
         .scrollspy( "refresh" );
 
-    amplify.publish( "smooth_scroll_to_content" );
-
-    if ( !getHash( location.hash ) ) {
+    if ( getHash( location.hash ) ) {
+        scrollToContent();
+    } else {
         $lis.first().addClass( "active" );
+        scrolledToContent = false;
     }
-
 }, 5 );
 
 // Change location.hash
 $( "#main" ).on( "click", "#subnav a", function( e ) {
-
+    scrolledToContent = true;
     e.preventDefault();
-    location.hash = normalizePath( location.hash ) + this.hash;
+    location.hash = normalizePath( location.hash ) + "/" + this.hash.slice( 1 );
 } );
 
 // keep subnav bar on top
@@ -161,22 +163,22 @@ amplify.subscribe( "content_loaded", function() {
 }, 6);
 
 // Smooth scroll to content
-amplify.subscribe( "smooth_scroll_to_content", function() {
+function scrollToContent() {
     $.smoothScroll( {
-        scrollTarget: getHash( location.hash )
+        scrollTarget: "#" + getHash( location.hash ).slice( 1 ),
+        afterScroll: function() {
+            scrolledToContent = false;
+        }
     } );
-} );
+}
 
-var hashChangedByUserScrolling = false;
+var scrolledToContent = true;
 
 // Change location hash while user is scrolling and set flag to prevent loading of content
 $( "#main" ).on( "activate", "#subnav li", function() {
-    var newPath = normalizePath( location.hash ) + $( this ).children( "a" ).attr( "href" );
-    if ( location.hash === newPath ) {
-        return;
+    if ( !scrolledToContent ) {
+        location.hash = normalizePath( location.hash ) + "/" + $( this ).children( "a" ).attr( "href" ).slice( 1 );
     }
-    hashChangedByUserScrolling = true;
-    location.hash = newPath;
 } );
 
 // Makes tables sortable
@@ -212,20 +214,20 @@ $.fn.sortableTable = function() {
 
 // HASH CHANGE EVENT
 $( window ).on( "hashchange", function() {
-
-    // Path was not changed but hash was
+    // Path part of a hash was not changed but hash part was
     if ( normalizePath( previousPath ) === normalizePath( location.hash ) ) {
         previousPath = location.hash;
-        if ( !hashChangedByUserScrolling ) {
-            amplify.publish( "smooth_scroll_to_content" );
+        if ( scrolledToContent ) {
+            scrollToContent();
         }
-        hashChangedByUserScrolling = false;
+
         return;
     }
+
     previousPath = location.hash;
     var normalized = normalizePath( location.hash );
 
-    $( "#sidebar" ).load( normalized.substr( 1, location.hash.lastIndexOf( "/" ) ) + "menu.html",
+    $( "#sidebar" ).load( normalized.substr( 1, normalized.lastIndexOf( "/" ) ) + "menu.html",
         function(response, code) {
             if ( code === "error" ) {
                 return;
