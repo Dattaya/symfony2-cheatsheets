@@ -1,20 +1,17 @@
-var startPath = $( "#navbar a" ).first().attr( "href" );
-var previousPath;
-
-var normalizePath = function( path ) {
+var getPath = function( path ) {
     if ( path ) {
-        if ( getHash( path ) ) {
+        if ( getSubPath( path ) ) {
             return path.substring( 0, path.lastIndexOf( "/" ) );
         }
         return path;
     }
 };
 
-var getHash = function( path ) {
+var getSubPath = function( path ) {
     if ( path.match( /\.html$/ ) ) {
-        return;
+        return "";
     }
-    return path.substr( path.lastIndexOf( "/" ) );
+    return path.substr( path.lastIndexOf( "/" ) + 1 );
 };
 
 // SIDEBAR
@@ -24,7 +21,7 @@ amplify.subscribe( "sidebar_loaded", function() {
         .children( ".active" )
         .removeClass( "active" )
     .end()
-        .find( "li:has(a[href='" + normalizePath( location.hash ) + "'])" )
+        .find( "li:has(a[href='" + getPath( location.hash ) + "'])" )
         .addClass( "active" );
 } );
 
@@ -66,22 +63,24 @@ amplify.subscribe( "content_loaded", function() {
     $lis.children( "a" ).smoothScroll();
 
     $( "body" )
-        .scrollspy( { target: "#subnav", offset: 100 } )
+        .scrollspy( { target: "#subnav", offset: 130 } )
         .scrollspy( "refresh" );
 
-    if ( getHash( location.hash ) ) {
-        scrollToContent();
+    if ( getSubPath( location.hash ) ) {
+        scrollToContent( "#" + getSubPath( location.hash ) );
     } else {
         $lis.first().addClass( "active" );
-        scrolledToContent = false;
     }
 }, 5 );
 
 // Change location.hash
 $( "#main" ).on( "click", "#subnav a", function( e ) {
-    scrolledToContent = true;
     e.preventDefault();
-    location.hash = normalizePath( location.hash ) + "/" + this.hash.slice( 1 );
+    if ( $( this ).closest( "li" ).index() === 0 ) {
+        location.hash = getPath( location.hash );
+        return;
+    }
+    location.hash = getPath( location.hash ) + "/" + this.hash.slice( 1 );
 } );
 
 // keep subnav bar on top
@@ -162,24 +161,57 @@ amplify.subscribe( "content_loaded", function() {
         } )
 }, 6);
 
-// Smooth scroll to content
-function scrollToContent() {
+var scrollingToContent = false;
+
+var scrollToContent = function ( target ) {
+    scrollingToContent = true;
     $.smoothScroll( {
-        scrollTarget: "#" + getHash( location.hash ).slice( 1 ),
+        scrollTarget: target,
         afterScroll: function() {
-            scrolledToContent = false;
+            scrollingToContent = false;
         }
     } );
-}
-
-var scrolledToContent = true;
+};
 
 // Change location hash while user is scrolling and set flag to prevent loading of content
-$( "#main" ).on( "activate", "#subnav li", function() {
-    if ( !scrolledToContent ) {
-        location.hash = normalizePath( location.hash ) + "/" + $( this ).children( "a" ).attr( "href" ).slice( 1 );
+
+// Decided not to use `activate` event. In some cases `activate` event fired before `hashchange`,
+// when a user pressed 'back'/'forward' button, so location.hash can't be changed here.
+// Instead setInterval is used.
+//$( "#main" ).on( "activate", "#subnav li", function() {
+//    if ( !scrollingToContent ) {
+//        hashChangedByUserScrolling = true;
+//        location.hash = normalizePath( location.hash ) + "/" + $( this ).children( "a" ).attr( "href" ).slice( 1 );
+//
+//    }
+//} );
+
+var hashChangedByUserScrolling = false;
+setInterval( function() {
+    var $active = $( "#subnav .active" );
+
+    if ( scrollingToContent || $active.length === 0 ) {
+        return;
     }
-} );
+
+    if ( $active.index() === 0 ) {
+        if ( getSubPath( location.hash ) ) {
+            location.hash = getPath( location.hash );
+            hashChangedByUserScrolling = true;
+        }
+        return;
+    }
+
+    var $a = $active.children( "a" ),
+        href = $a.attr( "href" ).slice( 1 );
+
+    if ( href === getSubPath( location.hash ) ) {
+        return;
+    }
+
+    hashChangedByUserScrolling = true;
+    location.hash = getPath( location.hash ) + "/" + $a.attr( "href" ).slice( 1 );
+}, 1500 );
 
 // Makes tables sortable
 $.fn.sortableTable = function() {
@@ -213,19 +245,19 @@ $.fn.sortableTable = function() {
 
 
 // HASH CHANGE EVENT
+var previousPath;
 $( window ).on( "hashchange", function() {
     // Path part of a hash was not changed but hash part was
-    if ( normalizePath( previousPath ) === normalizePath( location.hash ) ) {
-        previousPath = location.hash;
-        if ( scrolledToContent ) {
-            scrollToContent();
+    if ( getPath( previousPath ) === getPath( location.hash ) ) {
+        if ( !hashChangedByUserScrolling ) {
+            scrollToContent( "#" + getSubPath( location.hash ) );
         }
-
+        hashChangedByUserScrolling = false;
         return;
     }
 
     previousPath = location.hash;
-    var normalized = normalizePath( location.hash );
+    var normalized = getPath( location.hash );
 
     $( "#sidebar" ).load( normalized.substr( 1, normalized.lastIndexOf( "/" ) ) + "menu.html",
         function(response, code) {
@@ -250,7 +282,7 @@ $( window ).on( "hashchange", function() {
 
 // BOOTSTRAP
 if ( !location.hash ) {
-    location.hash = startPath;
+    location.hash = $( "#navbar a" ).first().attr( "href" );
 } else {
     $( window ).trigger( "hashchange" );
 }
